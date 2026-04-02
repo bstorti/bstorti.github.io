@@ -1,203 +1,108 @@
-<!doctype html>
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title> My Portfolio </title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	 crossorigin="anonymous">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	 crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="css/main.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="css/lightbox.min.css">
-    <script type="text/javascript" src="js/lightbox-plus-jquery.min.js">
-    </script>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solar Car Aerodynamics — Bruno Storti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
+  <style>
+    :root{--cream:#f5f0e8;--paper:#faf7f2;--ink:#18150f;--ink2:#2e2a22;--muted:#5c5246;--rule:#d4c9b8;--accent:#9c3a14;--accent2:#1d4b7a;--tag-bg:#ece5d8;--hero-bg:#1e1a14;--hero-text:#f0ebe0;--hero-mut:#a89880;--sand:#c8997a;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink2);font-family:'Source Serif 4',Georgia,serif;font-weight:400;line-height:1.75;overflow-x:hidden;}
+    .top-rule{height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+    nav{background:var(--hero-bg);border-bottom:1px solid rgba(255,255,255,.08);padding:0 4rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:200;}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--hero-text);text-decoration:none;padding:1.1rem 0;}
+    .nav-logo span{color:var(--sand);}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--hero-mut);text-decoration:none;padding:1.35rem 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+    .nav-links a:hover{color:var(--sand);border-color:var(--sand);}
+    .page-hero{background:var(--hero-bg);padding:3.5rem 4rem 3rem;border-bottom:3px solid var(--accent);}
+    .page-hero-kicker{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);margin-bottom:.8rem;}
+    .page-hero-kicker a{color:var(--hero-mut);text-decoration:none;}
+    .page-hero-kicker a:hover{color:var(--sand);}
+    .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3.2rem);color:var(--hero-text);font-weight:400;line-height:1.15;max-width:24ch;}
+    .project-body{max-width:1100px;margin:0 auto;padding:4rem;}
+    .project-intro{font-size:1.02rem;color:var(--ink2);line-height:1.8;max-width:72ch;margin-bottom:3.5rem;padding-bottom:2rem;border-bottom:1px solid var(--rule);}
+    .project-intro strong{color:var(--ink);font-weight:600;}
+    .pub-section,.gallery-section{margin-bottom:3.5rem;}
+    .pub-section-title,.gallery-section-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--ink);font-weight:400;margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--rule);}
+    .pub-table{width:100%;border-collapse:collapse;font-size:.9rem;}
+    .pub-table thead th{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:.6rem 1rem;text-align:left;border-bottom:2px solid var(--rule);background:var(--cream);}
+    .pub-table tbody td{padding:.9rem 1rem;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top;line-height:1.55;}
+    .pub-table tbody tr:hover td{background:var(--cream);}
+    .pub-table a{color:var(--accent2);text-decoration:none;border-bottom:1px dotted var(--accent2);}
+    .pub-table a:hover{color:var(--accent);}
+    .year-cell{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);white-space:nowrap;}
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+    .gallery-grid a{display:block;overflow:hidden;aspect-ratio:4/3;}
+    .gallery-grid img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);transition:filter .4s,transform .4s;display:block;}
+    .gallery-grid a:hover img{filter:grayscale(0);transform:scale(1.04);}
+    footer{background:var(--hero-bg);border-top:1px solid rgba(255,255,255,.07);padding:1.8rem 4rem;display:flex;justify-content:space-between;align-items:center;}
+    .footer-name{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--hero-text);}
+    .footer-copy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--hero-mut);letter-spacing:.1em;}
+    .footer-top{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--hero-mut);text-decoration:none;transition:color .2s;}
+    .footer-top:hover{color:var(--sand);}
+    .fade{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+    .fade.visible{opacity:1;transform:none;}
+    @media(max-width:960px){nav{padding:0 1.5rem;}.nav-links{display:none;}.page-hero{padding:2.5rem 1.5rem 2rem;}.project-body{padding:2.5rem 1.5rem;}.gallery-grid{grid-template-columns:repeat(2,1fr);}footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem;}}
+    @media(max-width:600px){.gallery-grid{grid-template-columns:1fr;}}
+  </style>
 </head>
-
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
-
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.html">HOME</a>
-			</div>
-			<div>
-				<div class="collapse navbar-collapse" id="myNavbar">
-					<ul class="nav navbar-nav">
-						<li><a href="index.html#about2">ABOUT ME</a></li>
-						<li><a href="index.html#skills2">INTERESTS</a></li>
-						<li><a href="index.html#portfolio2">PORTFOLIO</a></li>
-						<li><a href="index.html#contact">CONTACT</a></li>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Section 4 <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#section41">Section 4-1</a></li>
-								<li><a href="#section42">Section 4-2</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</nav>
-
-	<div id="aboutt" class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h2 style="padding-top: 20px"> Aerodynamic design of a Solar car</h2>
-				<div align="center"></div>
-				<p class="container-text">
-					I am Mechanical Engineer graduated from the National Technological University from Santa Fe,
-					Argentina. Currently
-					i'm doing a PhD on engineering, specifically in Computational Mechanics, at the CIMEC institute
-					located in Santa
-					Fe as well.
-					In the third year of the engineering career I applied for a scholarship to work in the Flowmeter
-					Laboratory of the
-					University. We started working on the aerodinamic design of a solar car using CFD (Computational
-					Fluid Dynamics)
-					to compete in the Atacama Solar Challenge, in Chile. Afterwards, in conjuction with my laboratory
-					colleagues and
-					our Director, we started working on the aerodinamics optimization of a urban medium-scale
-					Horizontal Axis Wind
-					Turbine, which would later become our degree thesis. Meanwhile I was studying engineering, I've
-					started working as
-					a teacher of the software "SolidWorks Motion" both for the industry and academic enviroments. Also,
-					during my career
-					I've been involved on several engineering projects. Between them one specifically was very
-					important for my professional
-					training, because of all the design, calculation and computations that the project involved. This
-					project was about
-					the entire design and construction of a new type of olives harvester based on pulses of air
-					avoiding any damage on the
-					olives trees (more information about this project in the Portfolio section).
-				</p>
-			</div>
-		</div>
-	</div>
-	</div>
-					
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h2 style="padding-top: 0px"> Articles and presentations</h2>
-				<div align="center"></div>
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Title</th>
-								<th>Authors</th>
-								<th>Place</th>
-								<th>Year</th>
-								<th>File</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Aerodynamic design and optimization of a solar car </td>
-								<td>S. Carenzo, I. Peralta, B. Storti y A. Albanesi</td>
-								<td>ENIEF (Mendoza)</td>
-								<td>2013</td>
-								<td><a href="https://cimec.org.ar/ojs/index.php/mc/article/download/4493/4423">Article (.pdf) </a></td>
-							</tr>
-						</tbody>
-	
-						<tbody>
-							<tr>
-								<td>Aerodynamic design and optimization of a solar car </td>
-								<td>S. Carenzo, I. Peralta, B. Storti y A. Albanesi</td>
-								<td>ENIEF (Mendoza)</td>
-								<td>2013</td>
-								<td><a href="images/solarcar/Presentacion-ENIEF2013.pdf">Presentation (.pdf) </a></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<div id="aboutt" class="container-fluid">
-				<div class="row">
-					<div class="col-md-12">
-						<h2 style="padding-top: 0px"> Gallery</h2>
-					</div>
-						<div align="center">
-                    <div class="col-md-4">
-                        <div class="gallery">
-                            <a href="images/solarcar/SC1.jpg" data-lightbox="mygallery" data-title="Solidworks"><img src="images/solarcar/SC1_small_b.png"></a>
-                            <a href="images/solarcar/SC4.jpg" data-lightbox="mygallery"><img src="images/solarcar/SC4_small_b.png"></a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="gallery">
-                            <a href="images/solarcar/SC2.jpg" data-lightbox="mygallery" data-title="Solidworks"><img src="images/solarcar/SC2_small_b.png"></a>
-                            <a href="images/solarcar/SC5.jpg" data-lightbox="mygallery"><img src="images/solarcar/SC5_small_b.png"></a>
-                        </div>
-                    </div>
-    
-                    <div class="col-md-4">
-                        <div class="gallery">
-                            <a href="images/solarcar/SC3.jpg" data-lightbox="mygallery" data-title="Solidworks"><img src="images/solarcar/SC3_small_b.png"></a>
-                            <a href="images/solarcar/SC6.png" data-lightbox="mygallery"><img src="images/solarcar/SC6_small_b.png"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="row">
-                <div class='col-sm-2'></div>
-                <div class="col-md-8">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/LIUCwq4QhaI" 
-                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-                    
-                    </div>
-                </div>
-                <div class='col-sm-2'></div>
-            </div> -->
-        </div>
+<body>
+  <div class="top-rule"></div>
+  <nav>
+    <a href="index.html" class="nav-logo">Bruno <span>Storti</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#portfolio">Portfolio</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <header class="page-hero">
+    <p class="page-hero-kicker">← <a href="index.html#portfolio">Portfolio</a> &nbsp;/&nbsp; Project 01</p>
+    <h1>Aerodynamic Design<br>of a Solar Car</h1>
+  </header>
+  <main class="project-body">
+    <p class="project-intro fade">
+      During my third year of engineering I joined the Flowmeter Laboratory at UTN Santa Fe and began working on the aerodynamic design of a solar-powered vehicle to compete in the <strong>Atacama Solar Challenge</strong> in Chile. Using Computational Fluid Dynamics (CFD), we developed and optimised the car's external shape to minimise drag and improve stability under racing conditions, applying ANSYS CFX and mesh generation techniques learned in the laboratory.
+    </p>
+    <div class="pub-section fade">
+      <h2 class="pub-section-title">Articles &amp; Presentations</h2>
+      <div style="overflow-x:auto;">
+        <table class="pub-table">
+          <thead><tr><th>Title</th><th>Authors</th><th>Venue</th><th class="year-cell">Year</th><th>File</th></tr></thead>
+          <tbody>
+            <tr><td>Aerodynamic design and optimization of a solar car</td><td>S. Carenzo, I. Peralta, B. Storti, A. Albanesi</td><td>ENIEF (Mendoza)</td><td class="year-cell">2013</td><td><a href="https://cimec.org.ar/ojs/index.php/mc/article/download/4493/4423" target="_blank">Article (PDF)</a></td></tr>
+            <tr><td>Aerodynamic design and optimization of a solar car — presentation</td><td>S. Carenzo, I. Peralta, B. Storti, A. Albanesi</td><td>ENIEF (Mendoza)</td><td class="year-cell">2013</td><td><a href="images/solarcar/Presentacion-ENIEF2013.pdf">Presentation (PDF)</a></td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-
-	<script>
-		$(document).ready(function () {
-			// Add scrollspy to <body>
-			$('body').scrollspy({ target: ".navbar", offset: 50 });
-
-			// Add smooth scrolling on all links inside the navbar
-			$("#myNavbar a").on('click', function (event) {
-				// Make sure this.hash has a value before overriding default behavior
-				if (this.hash !== "") {
-					// Prevent default anchor click behavior
-					event.preventDefault();
-
-					// Store hash
-					var hash = this.hash;
-
-					// Using jQuery's animate() method to add smooth page scroll
-					// The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-					$('html, body').animate({
-						scrollTop: $(hash).offset().top
-					}, 800, function () {
-
-						// Add hash (#) to URL when done scrolling (default click behavior)
-						window.location.hash = hash;
-					});
-				}  // End if
-			});
-		});
-	</script>
+    <div class="gallery-section fade">
+      <h2 class="gallery-section-title">Gallery</h2>
+      <div class="gallery-grid">
+        <a href="images/solarcar/SC1.jpg" data-lightbox="solarcar" data-title="Solar Car CFD 1"><img src="images/solarcar/SC1_small_b.png" alt="Solar car 1"></a>
+        <a href="images/solarcar/SC2.jpg" data-lightbox="solarcar" data-title="Solar Car CFD 2"><img src="images/solarcar/SC2_small_b.png" alt="Solar car 2"></a>
+        <a href="images/solarcar/SC3.jpg" data-lightbox="solarcar" data-title="Solar Car CFD 3"><img src="images/solarcar/SC3_small_b.png" alt="Solar car 3"></a>
+        <a href="images/solarcar/SC4.jpg" data-lightbox="solarcar"><img src="images/solarcar/SC4_small_b.png" alt="Solar car 4"></a>
+        <a href="images/solarcar/SC5.jpg" data-lightbox="solarcar"><img src="images/solarcar/SC5_small_b.png" alt="Solar car 5"></a>
+        <a href="images/solarcar/SC6.png" data-lightbox="solarcar"><img src="images/solarcar/SC6_small_b.png" alt="Solar car 6"></a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <span class="footer-name">Bruno Alberto Storti</span>
+    <span class="footer-copy">© 2024 — All rights reserved</span>
+    <a href="index.html#portfolio" class="footer-top">← Portfolio</a>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  <script>
+    const obs = new IntersectionObserver(entries => { entries.forEach((e,i) => { if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*100); obs.unobserve(e.target); } }); }, {threshold:0.08});
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+  </script>
 </body>
-
 </html>

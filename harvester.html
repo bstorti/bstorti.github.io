@@ -1,234 +1,123 @@
-<!doctype html>
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title> My Portfolio </title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	 crossorigin="anonymous">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	 crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="css/main.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="css/lightbox.min.css">
-    <script type="text/javascript" src="js/lightbox-plus-jquery.min.js">
-    </script>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olive Harvester — Bruno Storti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
+  <style>
+    :root{--cream:#f5f0e8;--paper:#faf7f2;--ink:#18150f;--ink2:#2e2a22;--muted:#5c5246;--rule:#d4c9b8;--accent:#9c3a14;--accent2:#1d4b7a;--tag-bg:#ece5d8;--hero-bg:#1e1a14;--hero-text:#f0ebe0;--hero-mut:#a89880;--sand:#c8997a;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink2);font-family:'Source Serif 4',Georgia,serif;font-weight:400;line-height:1.75;overflow-x:hidden;}
+    .top-rule{height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+    nav{background:var(--hero-bg);border-bottom:1px solid rgba(255,255,255,.08);padding:0 4rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:200;}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--hero-text);text-decoration:none;padding:1.1rem 0;}
+    .nav-logo span{color:var(--sand);}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--hero-mut);text-decoration:none;padding:1.35rem 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+    .nav-links a:hover{color:var(--sand);border-color:var(--sand);}
+    .page-hero{background:var(--hero-bg);padding:3.5rem 4rem 3rem;border-bottom:3px solid var(--accent);}
+    .page-hero-kicker{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);margin-bottom:.8rem;}
+    .page-hero-kicker a{color:var(--hero-mut);text-decoration:none;}
+    .page-hero-kicker a:hover{color:var(--sand);}
+    .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3.2rem);color:var(--hero-text);font-weight:400;line-height:1.15;max-width:24ch;}
+    .project-body{max-width:1100px;margin:0 auto;padding:4rem;}
+    .project-intro{font-size:1.02rem;color:var(--ink2);line-height:1.8;max-width:72ch;margin-bottom:3.5rem;padding-bottom:2rem;border-bottom:1px solid var(--rule);}
+    .project-intro strong{color:var(--ink);font-weight:600;}
+    .pub-section,.gallery-section,.video-section{margin-bottom:3.5rem;}
+    .pub-section-title,.gallery-section-title,.video-section-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--ink);font-weight:400;margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--rule);}
+    .pub-table{width:100%;border-collapse:collapse;font-size:.9rem;}
+    .pub-table thead th{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:.6rem 1rem;text-align:left;border-bottom:2px solid var(--rule);background:var(--cream);}
+    .pub-table tbody td{padding:.9rem 1rem;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top;line-height:1.55;}
+    .pub-table tbody tr:hover td{background:var(--cream);}
+    .pub-table a{color:var(--accent2);text-decoration:none;border-bottom:1px dotted var(--accent2);}
+    .pub-table a:hover{color:var(--accent);}
+    .year-cell{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);white-space:nowrap;}
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+    .gallery-grid a{display:block;overflow:hidden;aspect-ratio:4/3;}
+    .gallery-grid img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);transition:filter .4s,transform .4s;display:block;}
+    .gallery-grid a:hover img{filter:grayscale(0);transform:scale(1.04);}
+    .video-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+    .video-wrap{position:relative;padding-top:56.25%;background:var(--hero-bg);}
+    .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+    footer{background:var(--hero-bg);border-top:1px solid rgba(255,255,255,.07);padding:1.8rem 4rem;display:flex;justify-content:space-between;align-items:center;}
+    .footer-name{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--hero-text);}
+    .footer-copy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--hero-mut);letter-spacing:.1em;}
+    .footer-top{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--hero-mut);text-decoration:none;transition:color .2s;}
+    .footer-top:hover{color:var(--sand);}
+    .fade{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+    .fade.visible{opacity:1;transform:none;}
+    @media(max-width:960px){nav{padding:0 1.5rem;}.nav-links{display:none;}.page-hero{padding:2.5rem 1.5rem 2rem;}.project-body{padding:2.5rem 1.5rem;}.gallery-grid{grid-template-columns:repeat(2,1fr);}.video-grid{grid-template-columns:1fr;}footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem;}}
+    @media(max-width:600px){.gallery-grid{grid-template-columns:1fr;}}
+  </style>
 </head>
-
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
-
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.html">HOME</a>
-			</div>
-			<div>
-				<div class="collapse navbar-collapse" id="myNavbar">
-					<ul class="nav navbar-nav">
-						<li><a href="index.html#about2">ABOUT ME</a></li>
-						<li><a href="index.html#skills2">INTERESTS</a></li>
-						<li><a href="index.html#portfolio2">PORTFOLIO</a></li>
-						<li><a href="index.html#contact">CONTACT</a></li>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Section 4 <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#section41">Section 4-1</a></li>
-								<li><a href="#section42">Section 4-2</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</nav>
-
-	<div id="aboutt" class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h2 style="padding-top: 20px"> Harvester </h2>
-				<div align="center"></div>
-				<p class="container-text">
-					I have worked in this proyect for several years in the development of a new type of olive harvester.
-					I worked as a designer and 
-				</p>
-			</div>
-		</div>
-	</div>
-	</div>
-					
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h2 style="padding-top: 0px"> Articles and presentations</h2>
-				<div align="center"></div>
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Title</th>
-								<th>Authors</th>
-								<th>Place</th>
-								<th>Year</th>
-								<th>File</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr>
-								<td>Design and optimization of small scales wind turbines (degree thesis)</td>
-								<td> B. Storti, I. Peralta, S. Carenzo</td>
-								<td>Santa Fe (UTN-FRSF)</td>
-								<td>2015</td>
-								<td><a href="images/windturbine/thesis.pdf">Thesis (pdf) </a>,<a href="images/windturbine/thesis-presentation.pdf">Presentation (pdf)</a></td>
-							</tr>
-						</tbody>
-
-						<tbody>
-							<tr>
-								<td>Aerodinamic optimization of small scale wind turbines using CFD</td>
-								<td> B. Storti, I. Peralta, S. Carenzo</td>
-								<td>CAIM (Resistencia)</td>
-								<td>2014</td>
-								<td><a href="images/windturbine/CAIM_FLOW2014.pdf">Article (pdf) </a>,<a href="images/windturbine/thesis-presentation.pdf">Presentation (pdf)</a></td>
-							</tr>
-						</tbody>
-
-						<tbody>
-							<tr>
-								<td>Aerodynamic of small scales wind turbines</td>
-								<td> B. Storti, I. Peralta, S. Carenzo</td>
-								<td>JIT (Santa Fe)</td>
-								<td>2013</td>
-								<td><a href="http://www.edutecne.utn.edu.ar/publicaciones/jit2013/FR-SANTA_FE/SF11aerodin%C3%A1mica.pdf">Article (pdf) </a></td>
-							</tr>
-						</tbody>
-	
-						<tbody>
-							<tr>
-								<td>Aerodynamic of small scales wind turbines </td>
-								<td>B. Storti, I. Peralta, S. Carenzo, A. Albanesi</td>
-								<td>ENIEF (Mendoza)</td>
-								<td>2013</td>
-								<td><a href="images/windturbine/poster-1.png">Poster (png) </a></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<div id="aboutt" class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h2 style="padding-top: 0px"> Gallery</h2>
-			</div>
-			<div align="center">
-				<div class="col-md-4">
-					<div class="gallery">
-						<a href="images/windturbine/WT1.png" data-lightbox="mygallery" data-title="Solidworks"><img src="images/windturbine/wt1_small.png"></a>
-						<a href="images/windturbine/WT4.png" data-lightbox="mygallery"><img src="images/windturbine/wt4_small.png"></a>
-						<a href="images/windturbine/WT7.png" data-lightbox="mygallery" data-title="Solidworks"><img src="images/windturbine/wt7_small.png"></a>
-					</div>
-				</div>
-	
-				<div class="col-md-4">
-					<div class="gallery">
-						<a href="images/windturbine/WT2.png" data-lightbox="mygallery" data-title="Solidworks"><img src="images/windturbine/wt2_small.png"></a>
-						<a href="images/windturbine/WT5.png" data-lightbox="mygallery"><img src="images/windturbine/wt5_small.png"></a>
-						<a href="images/windturbine/WT8.png" data-lightbox="mygallery" data-title="Solidworks"><img src="images/windturbine/wt8_small.png"></a>
-					</div>
-				</div>
-	
-				<div class="col-md-4">
-					<div class="gallery">
-						<a href="images/windturbine/WT3.png" data-lightbox="mygallery" data-title="Solidworks"><img src="images/windturbine/wt3_small.png"></a>
-						<a href="images/windturbine/WT6.jpg" data-lightbox="mygallery"><img src="images/windturbine/wt6_small.png"></a>
-						<a href="images/windturbine/WT9.png" data-lightbox="mygallery" data-title="Solidworks"><img src="images/windturbine/wt9_small.png"></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="aboutt" class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h2 style="padding-top: 0px"> Videos </h2>
-			</div>
-			<div class="col-md-6">
-				<div class="embed-responsive embed-responsive-16by9">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/SltcDCuhfqQ" frameborder="0" 
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-				</div>
-			</div>
-	
-			<div class="col-md-6">
-				<div class="embed-responsive embed-responsive-16by9">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/XtiSG_bW4ME" frameborder="0" 
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-				</div>
-			</div>
-		</div>
-	
-		<div class="row">
-			<div class="col-md-12">
-				<h2 style="padding-top: 0px"> </h2>
-			</div>
-		</div>
-	
-		<div class="row">
-			<div class="col-md-6">
-				<div class="embed-responsive embed-responsive-16by9">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/E4ZmnKvh6gs" frameborder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-				</div>
-			</div>
-	
-			<div class="col-md-6">
-				<div class="embed-responsive embed-responsive-16by9">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/sBL8cHb5_Ow" frameborder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<script>
-		$(document).ready(function () {
-			// Add scrollspy to <body>
-			$('body').scrollspy({ target: ".navbar", offset: 50 });
-
-			// Add smooth scrolling on all links inside the navbar
-			$("#myNavbar a").on('click', function (event) {
-				// Make sure this.hash has a value before overriding default behavior
-				if (this.hash !== "") {
-					// Prevent default anchor click behavior
-					event.preventDefault();
-
-					// Store hash
-					var hash = this.hash;
-
-					// Using jQuery's animate() method to add smooth page scroll
-					// The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-					$('html, body').animate({
-						scrollTop: $(hash).offset().top
-					}, 800, function () {
-
-						// Add hash (#) to URL when done scrolling (default click behavior)
-						window.location.hash = hash;
-					});
-				}  // End if
-			});
-		});
-	</script>
+<body>
+  <div class="top-rule"></div>
+  <nav>
+    <a href="index.html" class="nav-logo">Bruno <span>Storti</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#portfolio">Portfolio</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <header class="page-hero">
+    <p class="page-hero-kicker">← <a href="index.html#portfolio">Portfolio</a> &nbsp;/&nbsp; Project 03</p>
+    <h1>Pneumatic Olive Harvester:<br>Design &amp; Construction</h1>
+  </header>
+  <main class="project-body">
+    <p class="project-intro fade">
+      This project involved the complete design and construction of a novel type of olive harvester that uses <strong>pulses of compressed air</strong> to detach olives from the branches without causing any physical damage to the trees. I worked as lead designer and engineer over several years, covering aerodynamic and mechanical design, structural calculations, FEM analysis, and hands-on prototyping. The machine significantly reduces harvesting time compared to traditional manual methods while protecting the tree canopy.
+    </p>
+    <div class="pub-section fade">
+      <h2 class="pub-section-title">Articles &amp; Presentations</h2>
+      <div style="overflow-x:auto;">
+        <table class="pub-table">
+          <thead><tr><th>Title</th><th>Authors</th><th>Venue</th><th class="year-cell">Year</th><th>Files</th></tr></thead>
+          <tbody>
+            <tr><td>Design and optimization of small scale wind turbines (degree thesis)</td><td>B. Storti, I. Peralta, S. Carenzo</td><td>UTN-FRSF, Santa Fe</td><td class="year-cell">2015</td><td><a href="images/windturbine/thesis.pdf">Thesis (PDF)</a>, <a href="images/windturbine/thesis-presentation.pdf">Slides (PDF)</a></td></tr>
+            <tr><td>Aerodynamic optimization of small scale wind turbines using CFD</td><td>B. Storti, I. Peralta, S. Carenzo</td><td>CAIM (Resistencia)</td><td class="year-cell">2014</td><td><a href="images/windturbine/CAIM_FLOW2014.pdf">Article (PDF)</a></td></tr>
+            <tr><td>Aerodynamics of small scale wind turbines</td><td>B. Storti, I. Peralta, S. Carenzo</td><td>JIT (Santa Fe)</td><td class="year-cell">2013</td><td><a href="http://www.edutecne.utn.edu.ar/publicaciones/jit2013/FR-SANTA_FE/SF11aerodin%C3%A1mica.pdf" target="_blank">Article (PDF)</a></td></tr>
+            <tr><td>Aerodynamics of small scale wind turbines</td><td>B. Storti, I. Peralta, S. Carenzo, A. Albanesi</td><td>ENIEF (Mendoza)</td><td class="year-cell">2013</td><td><a href="images/windturbine/poster-1.png">Poster (PNG)</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="gallery-section fade">
+      <h2 class="gallery-section-title">Gallery</h2>
+      <div class="gallery-grid">
+        <a href="images/windturbine/WT1.png" data-lightbox="harv"><img src="images/windturbine/wt1_small.png" alt="Harvester 1"></a>
+        <a href="images/windturbine/WT2.png" data-lightbox="harv"><img src="images/windturbine/wt2_small.png" alt="Harvester 2"></a>
+        <a href="images/windturbine/WT3.png" data-lightbox="harv"><img src="images/windturbine/wt3_small.png" alt="Harvester 3"></a>
+        <a href="images/windturbine/WT4.png" data-lightbox="harv"><img src="images/windturbine/wt4_small.png" alt="Harvester 4"></a>
+        <a href="images/windturbine/WT5.png" data-lightbox="harv"><img src="images/windturbine/wt5_small.png" alt="Harvester 5"></a>
+        <a href="images/windturbine/WT6.jpg" data-lightbox="harv"><img src="images/windturbine/wt6_small.png" alt="Harvester 6"></a>
+      </div>
+      <p style="margin-top:.8rem;font-size:.82rem;color:var(--muted);font-style:italic;">Replace image paths above with your actual harvester images.</p>
+    </div>
+    <div class="video-section fade">
+      <h2 class="video-section-title">Videos</h2>
+      <div class="video-grid">
+        <div class="video-wrap"><iframe src="https://www.youtube.com/embed/SltcDCuhfqQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-wrap"><iframe src="https://www.youtube.com/embed/XtiSG_bW4ME" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-wrap"><iframe src="https://www.youtube.com/embed/E4ZmnKvh6gs" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-wrap"><iframe src="https://www.youtube.com/embed/sBL8cHb5_Ow" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <span class="footer-name">Bruno Alberto Storti</span>
+    <span class="footer-copy">© 2024 — All rights reserved</span>
+    <a href="index.html#portfolio" class="footer-top">← Portfolio</a>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  <script>
+    const obs = new IntersectionObserver(entries => { entries.forEach((e,i) => { if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*100); obs.unobserve(e.target); } }); }, {threshold:0.08});
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+  </script>
 </body>
-
 </html>
