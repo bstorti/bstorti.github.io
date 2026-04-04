@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>R&D Projects — Bruno Storti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
+  <style>
+    :root {
+      --cream:     #f5f0e8;
+      --paper:     #faf7f2;
+      --ink:       #18150f;
+      --ink2:      #2e2a22;
+      --muted:     #5c5246;
+      --rule:      #d4c9b8;
+      --accent:    #9c3a14;
+      --accent2:   #1d4b7a;
+      --tag-bg:    #ece5d8;
+      --hero-bg:   #1e1a14;
+      --hero-text: #f0ebe0;
+      --hero-mut:  #a89880;
+      --sand:      #c8997a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink2);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 400;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+    .top-rule { height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+    /* NAV */
+    nav {
+      background: var(--hero-bg);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 0 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; z-index: 200;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--hero-text); text-decoration: none; padding: 1.1rem 0; }
+    .nav-logo span { color: var(--sand); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--hero-mut); text-decoration: none; padding: 1.35rem 0; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
+    .nav-links a:hover { color: var(--sand); border-color: var(--sand); }
+
+    /* PAGE HERO */
+    .page-hero { background: var(--hero-bg); padding: 3.5rem 4rem 3rem; border-bottom: 3px solid var(--accent); }
+    .page-hero-kicker { font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--sand); margin-bottom: .8rem; }
+    .page-hero-kicker a { color: var(--hero-mut); text-decoration: none; }
+    .page-hero-kicker a:hover { color: var(--sand); }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: var(--hero-text); font-weight: 400; line-height: 1.15; max-width: 24ch; margin-bottom: 1rem; }
+    .page-hero p { color: var(--hero-mut); max-width: 60ch; font-size: 1.05rem; }
+
+    /* MAIN CONTAINER */
+    .project-body { max-width: 1000px; margin: 0 auto; padding: 4rem; }
+
+    /* LEFT-ALIGNED TIMELINE */
+    .timeline-wrap { border-left: 2px solid var(--rule); margin-left: 1rem; padding-left: 3rem; display: flex; flex-direction: column; gap: 4rem; position: relative; }
+    .timeline-item { position: relative; display: flex; flex-direction: column; color: inherit; border-bottom: 1px solid var(--rule); padding-bottom: 3rem; }
+    .timeline-item:last-child { border-bottom: none; padding-bottom: 0; }
+    
+    /* Timeline Node */
+    .timeline-item::before { content: ''; position: absolute; left: -3rem; top: 0.5rem; width: 14px; height: 14px; border-radius: 50%; background: var(--paper); border: 2px solid var(--accent); transform: translateX(-50%); transition: background 0.3s, transform 0.3s; z-index: 2; }
+    .timeline-item:hover::before { background: var(--accent); transform: translateX(-50%) scale(1.3); }
+    
+    /* Summary Section */
+    .timeline-summary { display: flex; gap: 2.5rem; align-items: flex-start; }
+    
+    /* Image Thumbnail */
+    .timeline-img-wrap { width: 220px; aspect-ratio: 4/3; flex-shrink: 0; overflow: hidden; border: 1px solid var(--rule); background: var(--cream); border-radius: 6px; }
+    .timeline-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(40%); transition: transform 0.5s, filter 0.5s; display: block; }
+    .timeline-item:hover .timeline-img { transform: scale(1.05); filter: grayscale(0%); }
+    
+    /* Summary Text */
+    .timeline-content { display: flex; flex-direction: column; justify-content: center; flex: 1; }
+    .timeline-year { font-family: 'JetBrains Mono', monospace; font-size: .65rem; letter-spacing: .15em; color: var(--accent); margin-bottom: .4rem; }
+    .port-item-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--ink); font-weight: 400; margin-bottom: .5rem; }
+    .port-item-tags { display: flex; flex-wrap: wrap; gap: .32rem; margin-bottom: .8rem; }
+    .port-tag { font-family: 'JetBrains Mono', monospace; font-size: .55rem; letter-spacing: .1em; text-transform: uppercase; background: var(--tag-bg); color: var(--muted); padding: .18rem .48rem; border: 1px solid var(--rule); }
+    .port-item-desc { font-size: .95rem; color: var(--ink2); line-height: 1.65; margin-bottom: 1rem; }
+    
+    /* Expand Button */
+    .expand-btn { align-self: flex-start; background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: .4rem 1.2rem; font-family: 'JetBrains Mono', monospace; font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: background 0.2s, color 0.2s; }
+    .expand-btn:hover { background: var(--accent); color: #fff; }
+
+    /* EXTENDED SECTION */
+    .timeline-extended { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s ease-out; }
+    .timeline-item.expanded .timeline-extended { grid-template-rows: 1fr; }
+    
+    .extended-inner { overflow: hidden; padding-top: 0; transition: padding 0.4s ease-out; }
+    .timeline-item.expanded .extended-inner { padding-top: 2rem; }
+    
+    .extended-inner h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--ink); margin-bottom: 0.8rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.3rem; margin-top: 1.5rem; }
+    .extended-inner h4:first-child { margin-top: 0; }
+    .extended-inner p { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.7; }
+    
+    /* Expanded Gallery */
+    .mini-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+    .mini-gallery a { display: block; aspect-ratio: 4/3; overflow: hidden; border-radius: 4px; border: 1px solid var(--rule); }
+    .mini-gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .mini-gallery a:hover img { transform: scale(1.1); }
+
+    /* Expanded Links */
+    .resource-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .resource-links a { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--accent2); text-decoration: none; border-bottom: 1px dotted var(--accent2); transition: color 0.2s; }
+    .resource-links a:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* FOOTER */
+    footer { background: var(--hero-bg); border-top: 1px solid rgba(255,255,255,.07); padding: 1.8rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-name { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--hero-text); }
+    .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--hero-mut); letter-spacing: .1em; }
+    .footer-top { font-family: 'JetBrains Mono', monospace; font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--hero-mut); text-decoration: none; transition: color .2s; }
+    .footer-top:hover { color: var(--sand); }
+
+    /* FADE */
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+    .fade.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 960px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .page-hero { padding: 2.5rem 1.5rem 2rem; }
+      .project-body { padding: 2.5rem 1.5rem; }
+      .timeline-wrap { margin-left: .5rem; padding-left: 2rem; gap: 3rem; }
+      .timeline-item::before { left: -2rem; }
+      .timeline-summary { flex-direction: column; gap: 1.2rem; }
+      .timeline-img-wrap { width: 100%; max-width: 350px; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-rule"></div>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Bruno <span>Storti</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#portfolio">R&D Projects</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-hero">
+    <p class="page-hero-kicker">← <a href="index.html">Home</a> &nbsp;/&nbsp; Complete Portfolio</p>
+    <h1>R&D Projects Timeline</h1>
+    <p>A comprehensive look at my engineering and research trajectory, from undergraduate prototypes to doctoral and postdoctoral HPC simulations across France and Spain.</p>
+  </header>
+
+  <main class="project-body">
+    <div class="timeline-wrap fade">
+      
+      <div class="timeline-item">
+        <div class="timeline-summary">
+          <div class="timeline-img-wrap">
+            <img src="/api/placeholder/400/300" alt="MATCH II" class="timeline-img">
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2023 — 2025</span>
+            <h3 class="port-item-title">MATCH II: Advanced Thermoplastic Composites</h3>
+            <div class="port-item-tags"><span class="port-tag">Postdoctoral Research</span><span class="port-tag">Nantes Université</span><span class="port-tag">HPC</span></div>
+            <p class="port-item-desc">Radiative–conductive 2D & 3D microscale thermal FEM modeling with experimental validation for the Automated Fiber Placement (AFP) process.</p>
+            <button class="expand-btn">Read more ↓</button>
+          </div>
+        </div>
+        <div class="timeline-extended">
+          <div class="extended-inner">
+            <h4>Abstract & Details</h4>
+            <p>During my postdoctoral fellowship at Nantes Université, funded by the Institut de Recherche Technologique (IRT) Jules Verne, I worked on the Manufacturing of Advanced Thermoplastic Composites with High Thickness II (MATCH II) project. My main tasks included adapting a radiative heat transfer FEM code for the AFP process in an HPC environment, creating 2D macroscale thermal modeling of a lab-scale setup, and developing a 3D multiscale Eulerian FEM framework for in-situ consolidation modeling. I also implemented an ALE+Active–Inactive elements approach to accurately simulate roller displacement.</p>
+            
+            <h4>Media Gallery</h4>
+            <div class="mini-gallery">
+              <a href="/api/placeholder/800/600" data-lightbox="proj1" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj1" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj1" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+            </div>
+
+            <h4>Resources</h4>
+            <div class="resource-links">
+              <a href="#">View Publication / DOI →</a>
+              <a href="#">Link to Project / Code →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-summary">
+          <div class="timeline-img-wrap">
+            <img src="/api/placeholder/400/300" alt="SAMFAST" class="timeline-img">
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2021 — 2023</span>
+            <h3 class="port-item-title">SAMFAST: Additive Manufacturing of Molds</h3>
+            <div class="port-item-tags"><span class="port-tag">Postdoctoral Research</span><span class="port-tag">Topology Opt.</span><span class="port-tag">Injection Molding</span></div>
+            <p class="port-item-desc">High-fidelity 3D FEM modeling of heat transfer and 3D cooling channel optimization using a stochastic approach and overset mesh FEM strategy.</p>
+            <button class="expand-btn">Read more ↓</button>
+          </div>
+        </div>
+        <div class="timeline-extended">
+          <div class="extended-inner">
+            <h4>Abstract & Details</h4>
+            <p>Funded by the Banque Publique d'Investissement (BPI) of France, the SAMFAST project focused on the rapid additive manufacturing of plastic injection mold inserts. My research centered on 1D transient heat transfer analysis to compare cooling times in steel and thermoplastic molds. I utilized an overset mesh FEM strategy to entirely eliminate the need for remeshing during the optimization phase, and performed multi-material topology optimization to significantly enhance thermal performance.</p>
+            
+            <h4>Media Gallery</h4>
+            <div class="mini-gallery">
+              <a href="/api/placeholder/800/600" data-lightbox="proj2" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj2" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj2" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+            </div>
+
+            <h4>Resources</h4>
+            <div class="resource-links">
+              <a href="#">View Publication / DOI →</a>
+              <a href="#">Link to Project / Code →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-summary">
+          <div class="timeline-img-wrap">
+            <img src="/api/placeholder/400/300" alt="NRG STORAGE" class="timeline-img">
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2020 — 2021</span>
+            <h3 class="port-item-title">NRG-STORAGE: Phase Change Metamaterials</h3>
+            <div class="port-item-tags"><span class="port-tag">CONICET</span><span class="port-tag">Energy Plus</span><span class="port-tag">Phase Change</span></div>
+            <p class="port-item-desc">High-fidelity thermal simulations, topology optimization, and building energy modeling of phase change and porous materials.</p>
+            <button class="expand-btn">Read more ↓</button>
+          </div>
+        </div>
+        <div class="timeline-extended">
+          <div class="extended-inner">
+            <h4>Abstract & Details</h4>
+            <p>As a Postdoctoral Researcher at CONICET, I contributed to the European Union H2020 NRG-STORAGE project. My work focused heavily on phase change materials (PCMs), determining effective thermal conductivity, and characterizing porous materials. I conducted high-fidelity thermal simulations using the Finite Element Method, performed advanced topology optimization, and utilized EnergyPlus for comprehensive building energy modeling.</p>
+            
+            <h4>Media Gallery</h4>
+            <div class="mini-gallery">
+              <a href="/api/placeholder/800/600" data-lightbox="proj3" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj3" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj3" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+            </div>
+
+            <h4>Resources</h4>
+            <div class="resource-links">
+              <a href="https://nrg-storage.eu/" target="_blank">Project Website →</a>
+              <a href="#">View Publication / DOI →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-summary">
+          <div class="timeline-img-wrap">
+            <img src="/api/placeholder/400/300" alt="Chimera Algorithm" class="timeline-img">
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2015 — 2020</span>
+            <h3 class="port-item-title">Chimera Overlapping-Mesh Algorithm</h3>
+            <div class="port-item-tags"><span class="port-tag">PhD Thesis</span><span class="port-tag">FSI</span><span class="port-tag">HPC</span></div>
+            <p class="port-item-desc">Development of an overlapping-mesh technique for simulating fluid-structure interaction on complex moving geometries running on Linux-based HPC clusters.</p>
+            <button class="expand-btn">Read more ↓</button>
+          </div>
+        </div>
+        <div class="timeline-extended">
+          <div class="extended-inner">
+            <h4>Abstract & Details</h4>
+            <p>This doctoral research focused on particle methods, immersed-boundary techniques, and a Chimera overlapping-mesh algorithm for complex fluid-structure interaction (FSI) problems. The methodology allows for large relative displacements between solid bodies without the need for computationally expensive mesh-updating or remeshing procedures. The algorithms were parallelized and run on High-Performance Computing (HPC) environments utilizing Code Saturne and PETSc-FEM.</p>
+            
+            <h4>Media Gallery</h4>
+            <div class="mini-gallery">
+              <a href="/api/placeholder/800/600" data-lightbox="proj4" data-title="Mesh topology"><img src="/api/placeholder/200/150" alt="Gallery Image 1"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj4" data-title="Velocity fields"><img src="/api/placeholder/200/150" alt="Gallery Image 2"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj4" data-title="HPC Scaling"><img src="/api/placeholder/200/150" alt="Gallery Image 3"></a>
+            </div>
+
+            <h4>Resources</h4>
+            <div class="resource-links">
+              <a href="#">View Publication / DOI →</a>
+              <a href="#">Simulation Video (YouTube) →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-summary">
+          <div class="timeline-img-wrap">
+            <img src="/api/placeholder/400/300" alt="VAWT Optimisation" class="timeline-img">
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2017 — 2019</span>
+            <h3 class="port-item-title">VAWT Deflector Optimisation</h3>
+            <div class="port-item-tags"><span class="port-tag">Wind Energy</span><span class="port-tag">Shape Optimisation</span><span class="port-tag">Neural Networks</span></div>
+            <p class="port-item-desc">Numerical shape optimisation of deflectors for a Vertical Axis Wind Turbine using adjoint methods and neural networks.</p>
+            <button class="expand-btn">Read more ↓</button>
+          </div>
+        </div>
+        <div class="timeline-extended">
+          <div class="extended-inner">
+            <h4>Abstract & Details</h4>
+            <p>To improve the efficiency of a Savonius wind turbine, we designed a set of deflector plates using a metamodel-based optimization approach. The project utilized Computational Fluid Dynamics (CFD) combined with Artificial Neural Networks to rapidly evaluate the aerodynamic performance of thousands of potential deflector shapes, ultimately yielding a configuration that significantly increased the power coefficient.</p>
+            
+            <h4>Media Gallery</h4>
+            <div class="mini-gallery">
+              <a href="/api/placeholder/800/600" data-lightbox="proj5" data-title="Savonius rotor"><img src="/api/placeholder/200/150" alt="Gallery Image 1"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj5" data-title="Streamlines"><img src="/api/placeholder/200/150" alt="Gallery Image 2"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj5" data-title="Optimization"><img src="/api/placeholder/200/150" alt="Gallery Image 3"></a>
+            </div>
+
+            <h4>Resources</h4>
+            <div class="resource-links">
+              <a href="https://doi.org/10.1016/j.energy.2019.07.144" target="_blank">DOI: Energy Journal →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-summary">
+          <div class="timeline-img-wrap">
+            <img src="/api/placeholder/400/300" alt="SolidWorks Teaching" class="timeline-img">
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2015 — 2022</span>
+            <h3 class="port-item-title">Engineering Mechanics & Simulation Instruction</h3>
+            <div class="port-item-tags"><span class="port-tag">Assistant Professor</span><span class="port-tag">UTN</span><span class="port-tag">SolidWorks</span></div>
+            <p class="port-item-desc">Led practical lessons solving fluid mechanics problems in engineering, and delivered SolidWorks Motion simulation courses for industry professionals.</p>
+            <button class="expand-btn">Read more ↓</button>
+          </div>
+        </div>
+        <div class="timeline-extended">
+          <div class="extended-inner">
+            <h4>Abstract & Details</h4>
+            <p>During my tenure as an Assistant Professor at the Universidad Tecnológica Nacional (UTN), I led practical lessons focusing on complex fluid mechanics problems. Drawing on my extensive background in CAD/CAE software, I also developed and taught comprehensive courses on SolidWorks Motion. The curriculum bridged the gap between academic theory (kinematics and dynamics) and practical, industry-standard simulation software.</p>
+            
+            <h4>Media Gallery</h4>
+            <div class="mini-gallery">
+              <a href="/api/placeholder/800/600" data-lightbox="proj6" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj6" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj6" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+            </div>
+
+            <h4>Resources</h4>
+            <div class="resource-links">
+              <a href="#">Course Syllabus (PDF) →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-summary">
+          <div class="timeline-img-wrap">
+            <img src="/api/placeholder/400/300" alt="Olive Harvester" class="timeline-img">
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2014 — 2015</span>
+            <h3 class="port-item-title">Pneumatic Pulse-Wind Harvester</h3>
+            <div class="port-item-tags"><span class="port-tag">Internship</span><span class="port-tag">Mechanical Design</span><span class="port-tag">Prototyping</span></div>
+            <p class="port-item-desc">Full design, FEM structural analysis, and construction of an air-pulse harvester prototype that detaches olives without damaging the trees.</p>
+            <button class="expand-btn">Read more ↓</button>
+          </div>
+        </div>
+        <div class="timeline-extended">
+          <div class="extended-inner">
+            <h4>Abstract & Details</h4>
+            <p>During my Research Engineering Internship at CIMEC - CONICET, I adapted a previously developed olive harvester to a new application for blueberry harvesting. The work combined mechanical design, numerical analysis, and prototype construction. I created detailed 3D CAD models of the machine structure, performed kinematic analyses in SolidWorks Motion, and conducted FEM simulations to evaluate stress and deformation in critical components like the scissor lift mechanism.</p>
+            
+            <h4>Media Gallery</h4>
+            <div class="mini-gallery">
+              <a href="/api/placeholder/800/600" data-lightbox="proj7" data-title="CAD Model"><img src="/api/placeholder/200/150" alt="Gallery Image 1"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj7" data-title="Manufactured Prototype"><img src="/api/placeholder/200/150" alt="Gallery Image 2"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj7" data-title="Field Testing"><img src="/api/placeholder/200/150" alt="Gallery Image 3"></a>
+            </div>
+
+            <h4>Resources</h4>
+            <div class="resource-links">
+              <a href="#">View Document (PDF) →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-summary">
+          <div class="timeline-img-wrap">
+            <img src="/api/placeholder/400/300" alt="Wind Turbine" class="timeline-img">
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2014</span>
+            <h3 class="port-item-title">Wind Turbine CFD</h3>
+            <div class="port-item-tags"><span class="port-tag">HAWT</span><span class="port-tag">Degree Thesis</span><span class="port-tag">CFD</span></div>
+            <p class="port-item-desc">Aerodynamic optimisation of an urban medium-scale Horizontal Axis Wind Turbine — culminating in my engineering degree thesis.</p>
+            <button class="expand-btn">Read more ↓</button>
+          </div>
+        </div>
+        <div class="timeline-extended">
+          <div class="extended-inner">
+            <h4>Abstract & Details</h4>
+            <p>My final degree thesis involved the rigorous aerodynamic optimization of a low-power, horizontal-axis wind turbine designed for urban environments. Utilizing CFD tools, the blade profiles and twist distributions were analyzed and optimized to operate efficiently within the turbulent, low-speed wind conditions typical of city landscapes.</p>
+            
+            <h4>Media Gallery</h4>
+            <div class="mini-gallery">
+              <a href="/api/placeholder/800/600" data-lightbox="proj8" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj8" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj8" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+            </div>
+
+            <h4>Resources</h4>
+            <div class="resource-links">
+              <a href="https://es.scribd.com/document/330744880/Aerodinamica-de-Turbinas-Eolicas" target="_blank">Read Thesis Document →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-summary">
+          <div class="timeline-img-wrap">
+            <img src="/api/placeholder/400/300" alt="Solar Car" class="timeline-img">
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2013</span>
+            <h3 class="port-item-title">Solar Car Aerodynamics</h3>
+            <div class="port-item-tags"><span class="port-tag">CFD</span><span class="port-tag">Aerodynamics</span><span class="port-tag">ANSYS</span></div>
+            <p class="port-item-desc">CFD-driven aerodynamic design of a solar vehicle body to compete in the Atacama Solar Challenge in Chile.</p>
+            <button class="expand-btn">Read more ↓</button>
+          </div>
+        </div>
+        <div class="timeline-extended">
+          <div class="extended-inner">
+            <h4>Abstract & Details</h4>
+            <p>During my third year of engineering, I joined the Flowmeter Laboratory at UTN Santa Fe to work on a solar-powered vehicle for the Atacama Solar Challenge. Using ANSYS CFX, we developed and iteratively optimized the car's external shape to strictly minimize aerodynamic drag while maintaining stability under racing conditions in the desert.</p>
+            
+            <h4>Media Gallery</h4>
+            <div class="mini-gallery">
+              <a href="/api/placeholder/800/600" data-lightbox="proj9" data-title="Solar Car CFD 1"><img src="/api/placeholder/200/150" alt="Gallery Image 1"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj9" data-title="Solar Car CFD 2"><img src="/api/placeholder/200/150" alt="Gallery Image 2"></a>
+              <a href="/api/placeholder/800/600" data-lightbox="proj9" data-title="Solar Car CFD 3"><img src="/api/placeholder/200/150" alt="Gallery Image 3"></a>
+            </div>
+
+            <h4>Resources</h4>
+            <div class="resource-links">
+              <a href="https://cimec.org.ar/ojs/index.php/mc/article/download/4493/4423" target="_blank">Read Article (PDF) →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer-name">Bruno Alberto Storti</span>
+    <span class="footer-copy">© 2026 — All rights reserved</span>
+    <a href="#" class="footer-top">↑ Top</a>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  
+  <script>
+    // Fade-in on scroll
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+    // Accordion Logic for Expandable Projects
+    document.querySelectorAll('.expand-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const item = this.closest('.timeline-item');
+        item.classList.toggle('expanded');
+        
+        // Change button text based on state
+        if (item.classList.contains('expanded')) {
+          this.innerHTML = 'Close ↑';
+        } else {
+          this.innerHTML = 'Read more ↓';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

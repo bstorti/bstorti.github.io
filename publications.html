@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publications — Bruno Storti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream:     #f5f0e8;
+      --paper:     #faf7f2;
+      --ink:       #18150f;
+      --ink2:      #2e2a22;
+      --muted:     #5c5246;
+      --rule:      #d4c9b8;
+      --accent:    #9c3a14;
+      --accent2:   #1d4b7a;
+      --tag-bg:    #ece5d8;
+      --hero-bg:   #1e1a14;
+      --hero-text: #f0ebe0;
+      --hero-mut:  #a89880;
+      --sand:      #c8997a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink2);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 400;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+    .top-rule { height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    nav {
+      background: var(--hero-bg);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 0 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; z-index: 200;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--hero-text); text-decoration: none; padding: 1.1rem 0; }
+    .nav-logo span { color: var(--sand); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--hero-mut); text-decoration: none; padding: 1.35rem 0; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
+    .nav-links a:hover { color: var(--sand); border-color: var(--sand); }
+    
+    .page-hero { background: var(--hero-bg); padding: 3.5rem 4rem 3rem; border-bottom: 3px solid var(--accent); }
+    .page-hero-kicker { font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--sand); margin-bottom: .8rem; }
+    .page-hero-kicker a { color: var(--hero-mut); text-decoration: none; }
+    .page-hero-kicker a:hover { color: var(--sand); }
+    .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); color: var(--hero-text); font-weight: 400; line-height: 1.15; max-width: 24ch; margin-bottom: 1rem; }
+    .page-hero-links { display: flex; gap: 1.5rem; }
+    .page-hero-links a { color: var(--sand); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .1em; border-bottom: 1px dotted var(--sand); transition: color .2s, border-color .2s; }
+    .page-hero-links a:hover { color: var(--hero-text); border-color: var(--hero-text); }
+    
+    .project-body { max-width: 1200px; margin: 0 auto; padding: 4rem; }
+    .pub-section { margin-bottom: 4.5rem; }
+    .pub-section-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--ink); font-weight: 400; margin-bottom: 1.5rem; padding-bottom: .6rem; border-bottom: 1px solid var(--rule); }
+    
+    .pub-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    .pub-table thead th { font-family: 'JetBrains Mono', monospace; font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); padding: .8rem 1rem; text-align: left; border-bottom: 2px solid var(--rule); background: var(--cream); }
+    .pub-table tbody td { padding: 1.2rem 1rem; border-bottom: 1px solid var(--rule); color: var(--ink2); vertical-align: top; line-height: 1.55; }
+    .pub-table tbody tr:hover td { background: var(--cream); }
+    .pub-table a { color: var(--accent2); text-decoration: none; border-bottom: 1px dotted var(--accent2); white-space: nowrap; }
+    .pub-table a:hover { color: var(--accent); border-color: var(--accent); }
+    .year-cell { font-family: 'JetBrains Mono', monospace; font-size: .78rem; color: var(--muted); white-space: nowrap; }
+    .author-highlight { font-weight: 600; color: var(--ink); }
+    .journal-title { font-style: italic; color: var(--muted); }
+    
+    footer { background: var(--hero-bg); border-top: 1px solid rgba(255,255,255,.07); padding: 1.8rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-name { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--hero-text); }
+    .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--hero-mut); letter-spacing: .1em; }
+    .footer-top { font-family: 'JetBrains Mono', monospace; font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--hero-mut); text-decoration: none; transition: color .2s; }
+    .footer-top:hover { color: var(--sand); }
+    
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+    .fade.visible { opacity: 1; transform: none; }
+    
+    @media (max-width: 960px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .page-hero { padding: 2.5rem 1.5rem 2rem; }
+      .project-body { padding: 2.5rem 1.5rem; }
+      .pub-table thead { display: none; }
+      .pub-table tbody td { display: block; padding: 0.5rem 1rem; border: none; }
+      .pub-table tbody td:first-child { padding-top: 1.5rem; font-weight: 600; }
+      .pub-table tbody td:last-child { padding-bottom: 1.5rem; border-bottom: 1px solid var(--rule); }
+      .year-cell { display: inline-block; padding: 0.2rem 0.6rem; background: var(--cream); border-radius: 4px; margin-top: 0.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule"></div>
+  <nav>
+    <a href="index.html" class="nav-logo">Bruno <span>Storti</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="index.html#portfolio">R&D Projects</a></li>
+      <li><a href="index.html#publications">Publications</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-hero">
+    <p class="page-hero-kicker">← <a href="index.html">Home</a> &nbsp;/&nbsp; Full List</p>
+    <h1>Publications &amp; Presentations</h1>
+    <div class="page-hero-links">
+      <a href="https://orcid.org/0000-0002-9454-5436" target="_blank">ORCID: 0000-0002-9454-5436</a>
+      <a href="https://www.scopus.com/authid/detail.uri?authorId=57192153700" target="_blank">SCOPUS ID: 57192153700</a>
+    </div>
+  </header>
+
+  <main class="project-body">
+    
+    <div class="pub-section fade">
+      <h2 class="pub-section-title">Published Articles in Indexed Journals</h2>
+      <div style="overflow-x:auto;">
+        <table class="pub-table">
+          <thead><tr><th>Title</th><th>Authors</th><th>Journal</th><th class="year-cell">Year</th><th>Link</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Lab-scale laser-assisted AFP bench with fixed roller: FEM radiative–conductive framework validation</td>
+              <td><span class="author-highlight">Storti B.</span>, Le Louet V., Lefevre N., Le Corre S.</td>
+              <td><span class="journal-title">Composites Part A: Applied Science and Manufacturing</span></td>
+              <td class="year-cell">2026</td>
+	      <td><a href="https://doi.org/10.1016/j.compositesa.2026.109647" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>An overset improved element-free Galerkin-finite element method for the solution of transient heat conduction problems with concentrated moving heat sources</td>
+              <td>Álvarez-Hostos J.C., Ullah Z., <span class="author-highlight">Storti B.</span>, Tourn B., Zambrano-Carrillo J.</td>
+              <td><span class="journal-title">Computer Methods in Applied Mechanics and Engineering</span></td>
+              <td class="year-cell">2024</td>
+              <td><a href="https://doi.org/10.1016/j.cma.2023.116574" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>A numerical framework for three-dimensional optimization of cooling channels in thermoplastic printed molds</td>
+              <td><span class="author-highlight">Storti B.</span>, Sobotka V.</td>
+              <td><span class="journal-title">Applied Thermal Engineering</span></td>
+              <td class="year-cell">2024</td>
+              <td><a href="https://doi.org/10.1016/j.applthermaleng.2023.121988" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Enhancing heat transfer in power transformer radiators via thermo-fluid dynamic analysis with periodic thermal boundary conditions</td>
+              <td>Dorella J., <span class="author-highlight">Storti B.</span>, Ríos Rodriguez G., Storti M.</td>
+              <td><span class="journal-title">International Journal of Heat and Mass Transfer</span></td>
+              <td class="year-cell">2024</td>
+              <td><a href="https://doi.org/10.1016/j.ijheatmasstransfer.2023.125142" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Automatic generation of high-fidelity representative volume elements and computational homogenization for the determination of thermal conductivity in foamed concretes</td>
+              <td>Fachinotti V., Peralta I., Toro S., <span class="author-highlight">Storti B.</span>, Caggiano A.</td>
+              <td><span class="journal-title">Materials and Structures</span></td>
+              <td class="year-cell">2023</td>
+              <td><a href="https://doi.org/10.1617/s11527-023-02253-2" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Design via topology optimisation and experimental assessment of thermal metadevices for conductive heatflux shielding in transient regime</td>
+              <td>Alvarez Hostos J.C., <span class="author-highlight">Storti B.</span>, Lefevre N., Sobotka V., Le Corre S., Fachinotti V.</td>
+              <td><span class="journal-title">International Journal of Heat and Mass Transfer</span></td>
+              <td class="year-cell">2023</td>
+              <td><a href="https://doi.org/10.1016/j.ijheatmasstransfer.2023.124238" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>A simulation-based optimization approach for poultry axial exhaust fans to fulfill aerodynamic and mechanical service constraints</td>
+              <td>Albanesi A., Dorella J., <span class="author-highlight">Storti B.</span>, Volpe N.</td>
+              <td><span class="journal-title">Structural and Multidisciplinary Optimization</span></td>
+              <td class="year-cell">2023</td>
+              <td><a href="https://doi.org/10.1007/s00158-023-03506-y" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>An automatic parallel scheme to design an augmented hydrokinetic river turbine using a simulation-based optimization approach</td>
+              <td>Dorella J., Volpe N., <span class="author-highlight">Storti B.</span>, Albanesi A., Zeitler F.</td>
+              <td><span class="journal-title">Ocean Engineering</span></td>
+              <td class="year-cell">2023</td>
+              <td><a href="https://doi.org/10.1016/j.oceaneng.2022.113374" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>On the performance of a Chimera–FEM implementation to treat moving heat sources and moving boundaries in time–dependent problems</td>
+              <td><span class="author-highlight">Storti B.</span>, Albanesi A., Peralta I., Storti M., Fachinotti V.</td>
+              <td><span class="journal-title">Finite Elements in Analysis and Design</span></td>
+              <td class="year-cell">2022</td>
+              <td><a href="https://doi.org/10.1016/j.finel.2022.103789" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Solving heat conduction problems with a moving heat source in arc welding processes via an overlapping nodes scheme based on the improved element-free Galerkin method</td>
+              <td>Álvares Hostos J.C., <span class="author-highlight">Storti B.</span>, Tourn B.A., Fachinotti V.D.</td>
+              <td><span class="journal-title">International Journal of Heat and Mass Transfer</span></td>
+              <td class="year-cell">2022</td>
+              <td><a href="https://doi.org/10.1016/j.ijheatmasstransfer.2022.122940" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Optimization of an internal blade cooling passage configuration using a Chimera approach and parallel computing</td>
+              <td><span class="author-highlight">Storti B.</span>, Garelli L., Storti M., D'Elía J.</td>
+              <td><span class="journal-title">Finite Elements in Analysis and Design</span></td>
+              <td class="year-cell">2020</td>
+              <td><a href="https://doi.org/10.1016/j.finel.2020.103423" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>A matrix-free Chimera approach based on Dirichlet-Dirichlet coupling for domain composition purposes</td>
+              <td><span class="author-highlight">Storti B.</span>, Garelli L., Storti M., D'Elía J.</td>
+              <td><span class="journal-title">Computers and Mathematics with Applications</span></td>
+              <td class="year-cell">2020</td>
+              <td><a href="http://dx.doi.org/10.1016/j.camwa.2020.01.021" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>An optimization method based on the evolutionary and topology approaches to reduce the mass of composite wind turbine blades</td>
+              <td>Albanesi A., Peralta I., Bre F., <span class="author-highlight">Storti B.</span>, Fachinotti V.</td>
+              <td><span class="journal-title">Structural and Multidisciplinary Optimization</span></td>
+              <td class="year-cell">2020</td>
+              <td><a href="https://doi.org/10.1007/s00158-020-02518-2" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Improving the efficiency of a Savonius wind turbine by designing a set of deflector plates with a metamodel-based optimization approach</td>
+              <td><span class="author-highlight">Storti B.</span>, Dorella J., Roman N., Peralta I., Albanesi A.</td>
+              <td><span class="journal-title">Energy</span></td>
+              <td class="year-cell">2019</td>
+              <td><a href="https://doi.org/10.1016/j.energy.2019.07.144" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Application of the inverse finite element method to design wind turbine blades</td>
+              <td>Albanesi A., Fachinotti V., Peralta I., <span class="author-highlight">Storti B.</span>, Gebhardt C.</td>
+              <td><span class="journal-title">Composite Structures</span></td>
+              <td class="year-cell">2017</td>
+              <td><a href="https://doi.org/10.1016/j.compstruct.2016.11.039" target="_blank">DOI →</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pub-section fade">
+      <h2 class="pub-section-title">International &amp; National Conferences</h2>
+      <div style="overflow-x:auto;">
+        <table class="pub-table">
+          <thead><tr><th>Title</th><th>Authors</th><th>Conference / Venue</th><th class="year-cell">Year</th><th>Link</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Modélisation FEM multi-échelle du transfert thermique lors du processus AFP in-situ sur des composites thermoplastiques</td>
+              <td><span class="author-highlight">Storti B.</span>, Le Reun A., Le Corre S.</td>
+              <td><span class="journal-title">SFT 2025 - 33rd French Thermal Conference</span><br>Chambéry, France</td>
+              <td class="year-cell">2025</td>
+              <td><a href="https://doi.org/10.25855/SFT2025-109" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>3D multi-scale thermal modeling of AFP in-situ consolidation processes for thermoplastic composites using an Eulerian FEM approach</td>
+              <td><span class="author-highlight">Storti B.</span>, Le Reun A., Le Corre S.</td>
+              <td><span class="journal-title">ESAFORM 2025 - 28th International Conference</span><br>Paestum, Italy</td>
+              <td class="year-cell">2025</td>
+              <td><a href="https://doi.org/10.21741/9781644903599-67" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Fiber-scale 3D RTE FEM simulation of laser-matter interaction in the automated fiber placement process for heating laws prediction</td>
+              <td><span class="author-highlight">Storti B.</span>, Le Reun A., Le Corre S.</td>
+              <td><span class="journal-title">ECCM 21 - 21st European Conference on Composite Materials</span><br>Nantes, France</td>
+              <td class="year-cell">2024</td>
+              <td><a href="https://doi.org/10.60691/yj56-np80" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Generación Automática de Volúmenes Representativos de Alta Fidelidad y Homogeneización Computacional para la Determinación de la Conductividad Térmica en Hormigones Espumados</td>
+              <td>Fachinotti V., Peralta I., Toro S., <span class="author-highlight">Storti B.</span>, Caggiano A.</td>
+              <td><span class="journal-title">MECOM 2024 - XL Argentine Congress of Computational Mechanics</span><br>Rosario, Argentina</td>
+              <td class="year-cell">2024</td>
+              <td><a href="https://amcaonline.org.ar/ocs/index.php/mecom2024/mecom2024/paper/viewFile/8196/2869" target="_blank">Abstract →</a></td>
+            </tr>
+            <tr>
+              <td>Accurate 3D modeling of laser-matter interaction in the AFP process by a conductive-radiative FEM approach</td>
+              <td><span class="author-highlight">Storti B.</span>, Le Reun A., Le Corre S.</td>
+              <td><span class="journal-title">ESAFORM 2024 - 27th International Conference</span><br>Toulouse, France</td>
+              <td class="year-cell">2024</td>
+              <td><a href="https://doi.org/10.21741/9781644903131-256" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Multi-material topology optimization of additively manufactured thermoplastic molds for heat transfer enhancement</td>
+              <td><span class="author-highlight">Storti B.</span>, Sobotka V., Alvarez Hostos J.C., Lefevre N., Le Corre S., Fachinotti V.</td>
+              <td><span class="journal-title">ESAFORM 2024 - 27th International Conference</span><br>Toulouse, France</td>
+              <td class="year-cell">2024</td>
+              <td><a href="https://doi.org/10.21741/9781644903131-297" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>Thermal design of cooling channels in an injection plastic mold by overset-based numerical optimization technique</td>
+              <td><span class="author-highlight">Storti B.</span>, Sobotka V.</td>
+              <td><span class="journal-title">IHTC-17 - 17th International Heat Transfer Conference</span><br>Cape Town, South Africa</td>
+              <td class="year-cell">2023</td>
+              <td><a href="http://dx.doi.org/10.1615/IHTC17.210-10" target="_blank">DOI →</a></td>
+            </tr>
+            <tr>
+              <td>A 3D implementation of a Chimera scheme applied to heat transfer optimization problems</td>
+              <td><span class="author-highlight">Storti B.</span>, Garelli L., Storti M., D'Elía J.</td>
+              <td><span class="journal-title">ENIEF 2019 - XXIV Congress on Numerical Methods</span><br>Santa Fe, Argentina</td>
+              <td class="year-cell">2019</td>
+              <td><a href="https://cimec.org.ar/ojs/index.php/mc/article/download/6010/6003" target="_blank">Abstract →</a></td>
+            </tr>
+            <tr>
+              <td>Study of flow stability around a cylinder at different Reynolds numbers using an embedded method</td>
+              <td>Zamora E., <span class="author-highlight">Storti B.</span>, Bataglia L., Storti M., Cruchaga M.</td>
+              <td><span class="journal-title">ENIEF 2019 - XXIV Congress on Numerical Methods</span><br>Santa Fe, Argentina</td>
+              <td class="year-cell">2019</td>
+              <td><a href="https://cimec.org.ar/ojs/index.php/mc/article/view/6012" target="_blank">Abstract →</a></td>
+            </tr>
+            <tr>
+              <td>Methodology for the design of composite material wind turbine blades combining metaheuristic and topological optimization</td>
+              <td>Albanesi A., Peralta I., Bre F., <span class="author-highlight">Storti B.</span>, Fachinotti V.</td>
+              <td><span class="journal-title">ENIEF 2019 - XXIV Congress on Numerical Methods</span><br>Santa Fe, Argentina</td>
+              <td class="year-cell">2019</td>
+              <td><a href="https://amcaonline.org.ar/ojs/index.php/mc/article/view/6024" target="_blank">Abstract →</a></td>
+            </tr>
+            <tr>
+              <td>A Chimera method based on Dirichlet-Dirichlet coupling applied to moving boundary problems</td>
+              <td>Garelli L., <span class="author-highlight">Storti B.</span>, Storti M., D'Elía J.</td>
+              <td><span class="journal-title">WCCM XIII - 13th World Congress on Computational Mechanics</span><br>New York, NY, USA</td>
+              <td class="year-cell">2018</td>
+              <td><a href="http://www.wccm2018.org/sites/default/files/WCCM_Abstracts_E-I.pdf" target="_blank">Abstract →</a></td>
+            </tr>
+            <tr>
+              <td>Optimization of the cooling system of a blade using overlapping mesh techniques and parallel computing</td>
+              <td><span class="author-highlight">Storti B.</span>, Garelli L., Storti M., D'Elía J.</td>
+              <td><span class="journal-title">MECOM 2018 - XII Argentine Congress of Computational Mechanics</span><br>Tucumán, Argentina</td>
+              <td class="year-cell">2018</td>
+              <td><a href="https://cimec.org.ar/ojs/index.php/mc/article/view/5724" target="_blank">Article →</a></td>
+            </tr>
+            <tr>
+              <td>Design and optimization using CFD and neural networks of deflectors for a Savonius turbine</td>
+              <td><span class="author-highlight">Storti B.</span>, Peralta I., Dorella J., Román N., Albanesi A., Garelli L.</td>
+              <td><span class="journal-title">ENIEF 2017 - XXIII Congress on Numerical Methods</span><br>La Plata, Argentina</td>
+              <td class="year-cell">2017</td>
+              <td><a href="https://cimec.org.ar/ojs/index.php/mc/article/view/5387" target="_blank">Article →</a></td>
+            </tr>
+            <tr>
+              <td>A coupling strategy for a Chimera method applied to thermal conduction optimization problems</td>
+              <td><span class="author-highlight">Storti B.</span>, Garelli L., Storti M., D'Elía J.</td>
+              <td><span class="journal-title">ENIEF 2017 - XXIII Congress on Numerical Methods</span><br>La Plata, Argentina</td>
+              <td class="year-cell">2017</td>
+              <td><a href="https://cimec.org.ar/ojs/index.php/mc/article/view/5381" target="_blank">Abstract →</a></td>
+            </tr>
+            <tr>
+              <td>A Chimera method based on Dirichlet-Dirichlet coupling and pasting penalization operators</td>
+              <td><span class="author-highlight">Storti B.</span>, Garelli L., Storti M., D'Elía J.</td>
+              <td><span class="journal-title">ENIEF 2016 - XXII Congress on Numerical Methods</span><br>Córdoba, Argentina</td>
+              <td class="year-cell">2016</td>
+              <td><a href="https://cimec.org.ar/ojs/index.php/mc/article/view/5185" target="_blank">Article →</a></td>
+            </tr>
+            <tr>
+              <td>Aerodynamic optimization of low-power wind turbines using CFD</td>
+              <td>Peralta I., Carenzo S., <span class="author-highlight">Storti B.</span>, Albanesi A.</td>
+              <td><span class="journal-title">CAIM 2014 - IV Argentine Congress of Mechanical Engineering</span><br>Resistencia, Argentina</td>
+              <td class="year-cell">2014</td>
+              <td><a href="https://es.scribd.com/document/330744880/Aerodinamica-de-Turbinas-Eolicas" target="_blank">Article →</a></td>
+            </tr>
+            <tr>
+              <td>Design and aerodynamic optimization of a solar vehicle</td>
+              <td>Carenzo S., Peralta I., <span class="author-highlight">Storti B.</span>, Albanesi A.</td>
+              <td><span class="journal-title">ENIEF 2013 - XX Congress on Numerical Methods</span><br>Mendoza, Argentina</td>
+              <td class="year-cell">2013</td>
+              <td><a href="https://cimec.org.ar/ojs/index.php/mc/article/view/4493" target="_blank">Article →</a></td>
+            </tr>
+            <tr>
+              <td>Aerodynamics of low-power wind turbines</td>
+              <td><span class="author-highlight">Storti B.</span>, Peralta I., Carenzo S.</td>
+              <td><span class="journal-title">ENIEF 2013 - XX Congress on Numerical Methods</span><br>Mendoza, Argentina</td>
+              <td class="year-cell">2013</td>
+              <td>Poster</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer-name">Bruno Alberto Storti</span>
+    <span class="footer-copy">© 2026 — All rights reserved</span>
+    <a href="#" class="footer-top">↑ Top</a>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach((e,i) => {
+        if(e.isIntersecting){
+          setTimeout(() => e.target.classList.add('visible'), i*100);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
