@@ -49,7 +49,7 @@
     .nav-logo span { color: var(--sand); }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--hero-mut); text-decoration: none; padding: 1.35rem 0; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
-    .nav-links a:hover { color: var(--sand); border-color: var(--sand); }
+    .nav-links a:hover, .nav-links a.active { color: var(--sand); border-color: var(--sand); }
 
     /* HERO */
     #hero { position: relative; background: var(--hero-bg); overflow: hidden; }
@@ -257,14 +257,22 @@
     .fade.visible { opacity: 1; transform: none; }
 
     @media (max-width: 960px) {
-      nav { padding: 0 1.5rem; }
-      .nav-links { display: none; }
+      /* --- 1. MOBILE NAVIGATION FIX --- */
+      nav { padding: 1rem 1.5rem; flex-direction: column; gap: 0.5rem; }
+      .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+      .nav-links a { padding: 0.5rem; }
+
+      /* --- 2. TWO-COLUMN STATS GRID --- */
+      .stats-row { display: grid; grid-template-columns: 1fr 1fr; }
+      .stat-item { border-right: 1px solid rgba(255,255,255,.07); border-bottom: 1px solid rgba(255,255,255,.07); padding: 1.2rem 1rem; }
+      .stat-item:nth-child(even) { border-right: none; } /* Removes right border for the 2nd and 4th items */
+      .stat-item:last-child { grid-column: span 2; border-bottom: none; border-right: none; } /* Makes the 5th item span both columns */
+
+      /* Keep the rest of your mobile CSS exactly as it is below this line */
       .hero-content { padding: 3.5rem 1.5rem 2rem; }
-      .stats-row { flex-direction: column; }
-      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); }
       .section-wrap { padding: 3.5rem 1.5rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .skills-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+
       
       /* Mobile Timeline Revert to Stacked & Left-Aligned */
       .timeline-wrap { gap: 2rem; margin-left: 0.5rem; padding-left: 0; } 
@@ -312,7 +320,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#portfolio">R&D Projects</a></li>
-      <li><a href="publications.html">Publications</a></li>
+      <li><a href="#publications">Publications</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -323,22 +331,20 @@
       <p class="hero-kicker">Research Fellow · CIMNE, Spain</p>
       <h1 class="hero-name">Bruno A. Storti, <em>PhD</em><br></h1>
       <p class="hero-tagline"> A multidisciplinary engineering researcher specialising in high-performance computational modeling, multiscale analysis, and numerical optimization to develop robust models for advanced manufacturing processes.
-	<!-- Researcher specialising in Computational Fluid Dynamics, fluid-structure interaction, and advanced manufacturing processes. -->
       </p>
       <div class="hero-chips">
-        <!-- <span class="chip">CFD</span> -->
         <span class="chip">Comp. Mechanics</span>
         <span class="chip">HPC</span>
         <span class="chip">Composites</span>
         <span class="chip">Optimization</span>
         <span class="chip">C++ · Octave · Python</span>
-        <!-- <span class="chip">ANSYS · OpenFOAM</span> -->
       </div>
     </div>
     <div class="stats-row">
       <div class="stat-item"><div class="stat-number">10+</div><div class="stat-label">Years of research experience</div></div>
       <div class="stat-item"><div class="stat-number">14</div><div class="stat-label">R&D projects</div></div>
       <div class="stat-item"><div class="stat-number">15</div><div class="stat-label">Published articles</div></div>
+      <div class="stat-item"><div class="stat-number">18</div><div class="stat-label">Conference contributions</div></div>
       <div class="stat-item"><div class="stat-number">2+</div><div class="stat-label">Years teaching</div></div>
     </div>
   </div>
@@ -357,18 +363,18 @@
           <div class="sidebar-block"><span class="sb-label">Position</span><div class="sb-value">Research Fellow</div></div>
           <div class="sidebar-block"><span class="sb-label">Institution</span><div class="sb-value">CIMNE <br> Barcelona, Spain</div></div>
           <div class="sidebar-block"><span class="sb-label">Field</span><div class="sb-value">
-	      HPC ·
-	      FEM ·
-	      CFD ·
-	      Optimization ·
-	      Thermal sciences ·
-	      Composites ·
-	      Thermoplastics ·
-	      Injection molding ·
-	      AFP ·
-	      Turbomachinery ·
-	      Metamaterials
-	  </div></div>
+            HPC ·
+            FEM ·
+            CFD ·
+            Optimization ·
+            Thermal sciences ·
+            Composites ·
+            Thermoplastics ·
+            Injection molding ·
+            AFP ·
+            Turbomachinery ·
+            Metamaterials
+          </div></div>
           <div class="sidebar-block"><span class="sb-label">Degree</span><div class="sb-value">PhD in Computational Mechanics</div></div>
           <div class="sidebar-block"><span class="sb-label">Languages</span><div class="sb-value">Spanish · English · French · Portuguese</div></div>
         </aside>
@@ -411,7 +417,7 @@
       
       <div class="timeline-wrap fade">
 
-       <a href="projects.html" class="timeline-item">
+       <a href="projects.html#proj-fe2" class="timeline-item">
           <div class="timeline-img-wrap">
             <img src="./images/fe2.png" alt="FE2" class="timeline-img">
           </div>
@@ -424,7 +430,7 @@
           </div>
         </a>
 
-        <a href="projects.html" class="timeline-item">
+        <a href="projects.html#proj-match" class="timeline-item">
           <div class="timeline-img-wrap">
             <img src="./images/matchiid.png" alt="MATCH II" class="timeline-img">
           </div>
@@ -437,9 +443,8 @@
           </div>
         </a>
 
-        <a href="projects.html" class="timeline-item">
+        <a href="projects.html#proj-samfast" class="timeline-item">
           <div class="timeline-img-wrap">
-            <!-- <img src="/api/placeholder/400/400" alt="SAMFAST" class="timeline-img"> -->
             <img src="./images/samfast.png" alt="SAMFAST" class="timeline-img">
           </div>
           <div class="timeline-content">
@@ -451,7 +456,7 @@
           </div>
         </a>
 
-        <a href="projects.html" class="timeline-item">
+        <a href="projects.html#proj-nrg" class="timeline-item">
           <div class="timeline-img-wrap">
             <img src="./images/nrgstorage.png" alt="NRG STORAGE" class="timeline-img">
           </div>
@@ -464,10 +469,9 @@
           </div>
         </a>
 
-        <a href="projects.html" class="timeline-item">
+        <a href="projects.html#proj-chimera" class="timeline-item">
           <div class="timeline-img-wrap">
-            <!-- <img src="/api/placeholder/400/400" alt="Chimera Algorithm" class="timeline-img"> -->
-	    <img src="./images/chimera.png" alt="Chimera Algorithm" class="timeline-img">
+        <img src="./images/chimera.png" alt="Chimera Algorithm" class="timeline-img">
           </div>
           <div class="timeline-content">
             <span class="timeline-year">2015 — 2020 <span class="fi fi-ar proj-flag" title="Argentina"></span></span>
@@ -631,6 +635,32 @@
         const t = document.querySelector(a.getAttribute('href'));
         if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
       });
+    });
+
+    // Highlight Nav Links on Scroll
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-links a");
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const currentId = entry.target.getAttribute("id");
+          
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === `#${currentId}`) {
+              link.classList.add("active");
+            }
+          });
+        }
+      });
+    }, { 
+      rootMargin: "0px 0px -50% 0px", 
+      threshold: 0 
+    });
+
+    sections.forEach((section) => {
+      navObserver.observe(section);
     });
   </script>
 </body>

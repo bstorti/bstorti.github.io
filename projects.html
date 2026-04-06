@@ -161,7 +161,7 @@
   <main class="project-body">
     <div class="timeline-wrap fade">
       
-      <div class="timeline-item">
+      <div class="timeline-item" id="proj-match">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
             <img src="/api/placeholder/400/300" alt="MATCH II" class="timeline-img">
@@ -195,7 +195,7 @@
         </div>
       </div>
 
-      <div class="timeline-item">
+      <div class="timeline-item" id="proj-samfast">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
             <img src="/api/placeholder/400/300" alt="SAMFAST" class="timeline-img">
@@ -229,7 +229,7 @@
         </div>
       </div>
 
-      <div class="timeline-item">
+      <div class="timeline-item" id="proj-nrg">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
             <img src="/api/placeholder/400/300" alt="NRG STORAGE" class="timeline-img">
@@ -263,7 +263,7 @@
         </div>
       </div>
 
-      <div class="timeline-item">
+      <div class="timeline-item" id="proj-chimera">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
             <img src="/api/placeholder/400/300" alt="Chimera Algorithm" class="timeline-img">
@@ -297,7 +297,7 @@
         </div>
       </div>
 
-      <div class="timeline-item">
+      <div class="timeline-item" id="proj-vawt">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
             <img src="/api/placeholder/400/300" alt="VAWT Optimisation" class="timeline-img">
@@ -330,7 +330,7 @@
         </div>
       </div>
 
-      <div class="timeline-item">
+      <div class="timeline-item" id="proj-teaching">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
             <img src="/api/placeholder/400/300" alt="SolidWorks Teaching" class="timeline-img">
@@ -363,7 +363,7 @@
         </div>
       </div>
 
-      <div class="timeline-item">
+      <div class="timeline-item" id="proj-olive">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
             <img src="/api/placeholder/400/300" alt="Olive Harvester" class="timeline-img">
@@ -396,7 +396,7 @@
         </div>
       </div>
 
-      <div class="timeline-item">
+      <div class="timeline-item" id="proj-wind">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
             <img src="/api/placeholder/400/300" alt="Wind Turbine" class="timeline-img">
@@ -429,7 +429,7 @@
         </div>
       </div>
 
-      <div class="timeline-item">
+      <div class="timeline-item" id="proj-solar">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
             <img src="/api/placeholder/400/300" alt="Solar Car" class="timeline-img">
@@ -499,6 +499,34 @@
           this.innerHTML = 'Read more ↓';
         }
       });
+    });
+
+    // Auto-expand and scroll to linked project from homepage
+    window.addEventListener('load', () => {
+      const hash = window.location.hash;
+      
+      if (hash) {
+        const targetProject = document.querySelector(hash);
+        
+        if (targetProject) {
+          const expandBtn = targetProject.querySelector('.expand-btn'); 
+          
+          if (expandBtn && !targetProject.classList.contains('expanded')) {
+            expandBtn.click(); 
+          }
+          
+          setTimeout(() => {
+            const headerOffset = 80; 
+            const elementPosition = targetProject.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+            window.scrollTo({
+                 top: offsetPosition,
+                 behavior: "smooth"
+            });
+          }, 300); 
+        }
+      }
     });
   </script>
 </body>
