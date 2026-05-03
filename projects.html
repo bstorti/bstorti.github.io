@@ -6,9 +6,13 @@
   <title>R&D Projects — Bruno Storti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
   <style>
     :root {
+      /* FLAG TO TOGGLE PARTNER LOGOS: Set to 'flex' to activate, or 'none' to deactivate */
+      --show-partner-logos: none; 
+
       --cream:     #f5f0e8;
       --paper:     #faf7f2;
       --ink:       #18150f;
@@ -81,12 +85,20 @@
     
     /* Summary Text */
     .timeline-content { display: flex; flex-direction: column; justify-content: center; flex: 1; }
-    .timeline-year { font-family: 'JetBrains Mono', monospace; font-size: .65rem; letter-spacing: .15em; color: var(--accent); margin-bottom: .4rem; }
+    .timeline-year { font-family: 'JetBrains Mono', monospace; font-size: .65rem; letter-spacing: .15em; color: var(--accent); margin-bottom: .4rem; display: flex; align-items: center; }
+    .proj-flag { font-size: 1.1rem; border-radius: 2px; margin-left: 8px; letter-spacing: normal; }
     .port-item-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--ink); font-weight: 400; margin-bottom: .5rem; }
     .port-item-tags { display: flex; flex-wrap: wrap; gap: .32rem; margin-bottom: .8rem; }
     .port-tag { font-family: 'JetBrains Mono', monospace; font-size: .55rem; letter-spacing: .1em; text-transform: uppercase; background: var(--tag-bg); color: var(--muted); padding: .18rem .48rem; border: 1px solid var(--rule); }
-    .port-item-desc { font-size: .95rem; color: var(--ink2); line-height: 1.65; margin-bottom: 1rem; }
     
+    /* Desc adjusted to remove bottom margin so logos fit tightly below */
+    .port-item-desc { font-size: .95rem; color: var(--ink2); line-height: 1.65; margin-bottom: 0.6rem; text-align: justify; }
+    
+    /* COMPACT INLINE PARTNER LOGOS */
+    .partner-inline-logos { display: var(--show-partner-logos); gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.2rem; }
+    .partner-logo-compact { height: 24px; object-fit: contain; filter: grayscale(100%) opacity(60%); transition: filter 0.3s; }
+    .partner-logo-compact:hover { filter: grayscale(0%) opacity(100%); }
+
     /* Expand Button */
     .expand-btn { align-self: flex-start; background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: .4rem 1.2rem; font-family: 'JetBrains Mono', monospace; font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: background 0.2s, color 0.2s; }
     .expand-btn:hover { background: var(--accent); color: #fff; }
@@ -100,13 +112,42 @@
     
     .extended-inner h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--ink); margin-bottom: 0.8rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.3rem; margin-top: 1.5rem; }
     .extended-inner h4:first-child { margin-top: 0; }
-    .extended-inner p { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.7; }
+    .extended-inner p { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.7; text-align: justify; }
     
-    /* Expanded Gallery */
-    .mini-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
-    .mini-gallery a { display: block; aspect-ratio: 4/3; overflow: hidden; border-radius: 4px; border: 1px solid var(--rule); }
-    .mini-gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-    .mini-gallery a:hover img { transform: scale(1.1); }
+    /* Expanded Gallery - Swipeable Row (Supports Images & Videos) */
+    .mini-gallery { 
+      display: flex; 
+      flex-wrap: nowrap; 
+      overflow-x: auto; 
+      gap: 12px; 
+      margin-bottom: 1.5rem; 
+      padding-bottom: 10px; 
+      scroll-behavior: smooth;
+    }
+    
+    .mini-gallery a, 
+    .mini-gallery video { 
+      flex: 0 0 160px; 
+      aspect-ratio: 4/3; 
+      overflow: hidden; 
+      border-radius: 4px; 
+      border: 1px solid var(--rule); 
+      background: var(--cream);
+      cursor: pointer;
+    }
+    
+    .mini-gallery img, 
+    .mini-gallery video { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      transition: transform 0.3s; 
+    }
+    
+    .mini-gallery a:hover img,
+    .mini-gallery video:hover { 
+      transform: scale(1.1); 
+    }
 
     /* Expanded Links */
     .resource-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
@@ -164,13 +205,21 @@
       <div class="timeline-item" id="proj-match">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
-            <img src="/api/placeholder/400/300" alt="MATCH II" class="timeline-img">
+            <img src="./images/matchiib.png" alt="MATCH II" class="timeline-img">
           </div>
           <div class="timeline-content">
-            <span class="timeline-year">2023 — 2025</span>
-            <h3 class="port-item-title">MATCH II: Advanced Thermoplastic Composites</h3>
-            <div class="port-item-tags"><span class="port-tag">Postdoctoral Research</span><span class="port-tag">Nantes Université</span><span class="port-tag">HPC</span></div>
+            <span class="timeline-year">2023 — 2025 <span class="fi fi-fr proj-flag" title="France"></span></span>
+            <h3 class="port-item-title">MATCH II: Advanced Manufacturing of High-performance Thermoplastic Composites</h3>
+            <div class="port-item-tags"><span class="port-tag">Composites</span><span class="port-tag">AFP Process</span><span class="port-tag">Multiscale</span><span class="port-tag">Multiscale</span><span class="port-tag">HPC</span></div>
             <p class="port-item-desc">Radiative–conductive 2D & 3D microscale thermal FEM modeling with experimental validation for the Automated Fiber Placement (AFP) process.</p>
+            
+            <div class="partner-inline-logos">
+              <img src="./images/lten.bmp" alt="Nantes Université" class="partner-logo-compact" title="Nantes Université">
+              <img src="./images/cnrs.png" alt="Nantes Université" class="partner-logo-compact" title="Nantes Université">
+              <img src="./images/nantesuniversite.png" alt="Nantes Université" class="partner-logo-compact" title="Nantes Université">
+              <img src="./images/irt.jpg" alt="IRT Jules Verne" class="partner-logo-compact" title="IRT Jules Verne">
+            </div>
+
             <button class="expand-btn">Read more ↓</button>
           </div>
         </div>
@@ -178,18 +227,32 @@
           <div class="extended-inner">
             <h4>Abstract & Details</h4>
             <p>During my postdoctoral fellowship at Nantes Université, funded by the Institut de Recherche Technologique (IRT) Jules Verne, I worked on the Manufacturing of Advanced Thermoplastic Composites with High Thickness II (MATCH II) project. My main tasks included adapting a radiative heat transfer FEM code for the AFP process in an HPC environment, creating 2D macroscale thermal modeling of a lab-scale setup, and developing a 3D multiscale Eulerian FEM framework for in-situ consolidation modeling. I also implemented an ALE+Active–Inactive elements approach to accurately simulate roller displacement.</p>
-            
+
             <h4>Media Gallery</h4>
             <div class="mini-gallery">
-              <a href="/api/placeholder/800/600" data-lightbox="proj1" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj1" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj1" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="./images/matchii/amatch1.jpg" class="glightbox" data-gallery="proj-match" data-title="Mesh Topology">
+                <img src="./images/matchii/amatch1.jpg" alt="Mesh Topology">
+              </a>
+              <a href="./images/matchii/output2.mp4" class="glightbox" data-gallery="proj-match" data-title="Simulation Video">
+                <video src="./images/matchii/output2.mp4" autoplay loop muted playsinline></video>
+              </a>
+              <a href="./images/matchii/amatch2.jpg" class="glightbox" data-gallery="proj-match" data-title="Velocity Fields">
+                <img src="./images/matchii/amatch2.jpg" alt="Velocity Fields">
+              </a>
+              <a href="./images/matchii/amatch3.jpg" class="glightbox" data-gallery="proj-match" data-title="Velocity Fields">
+                <img src="./images/matchii/amatch3.jpg" alt="Velocity Fields">
+              </a>
+              <a href="./images/matchii/amatch4.jpg" class="glightbox" data-gallery="proj-match" data-title="Velocity Fields">
+                <img src="./images/matchii/amatch4.jpg" alt="Velocity Fields">
+              </a>
             </div>
-
+            
             <h4>Resources</h4>
             <div class="resource-links">
-              <a href="#">View Publication / DOI →</a>
-              <a href="#">Link to Project / Code →</a>
+              <a href="https://doi.org/10.1016/j.compositesa.2026.109647">View Publication / DOI →</a>
+              <a href="https://www.irt-jules-verne.fr/en/projets/solutions-for-the-manufacturing-of-thick-thermoplastic-composite-parts/">Link to Project Webpage →</a>
+              <a href="https://mrforum.com/product/9781644903599-67/"> ESAFORM Conference Communication →</a>
+              <a href="https://doi.org/10.25855/SFT2025-109"> SFT Conference Communication →</a>
             </div>
           </div>
         </div>
@@ -198,13 +261,20 @@
       <div class="timeline-item" id="proj-samfast">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
-            <img src="/api/placeholder/400/300" alt="SAMFAST" class="timeline-img">
+            <img src="./images/samfast.png" alt="SAMFAST" class="timeline-img">
           </div>
           <div class="timeline-content">
-            <span class="timeline-year">2021 — 2023</span>
-            <h3 class="port-item-title">SAMFAST: Additive Manufacturing of Molds</h3>
-            <div class="port-item-tags"><span class="port-tag">Postdoctoral Research</span><span class="port-tag">Topology Opt.</span><span class="port-tag">Injection Molding</span></div>
+            <span class="timeline-year">2021 — 2023 <span class="fi fi-fr proj-flag" title="France"></span></span>
+            <h3 class="port-item-title">SAMFAST: Additive Manufacturing of Composite Injection Molds</h3>
+            <div class="port-item-tags"><span class="port-tag">3D Printing</span><span class="port-tag">Topology Opt.</span><span class="port-tag">Injection Molding</span><span class="port-tag">Conformal Cooling</span><span class="port-tag">3D FEM</span></div>
             <p class="port-item-desc">High-fidelity 3D FEM modeling of heat transfer and 3D cooling channel optimization using a stochastic approach and overset mesh FEM strategy.</p>
+            
+           <div class="partner-inline-logos">
+              <img src="./images/lten.bmp" alt="Nantes Université" class="partner-logo-compact" title="Nantes Université">
+              <img src="./images/nantesuniversite.png" alt="Nantes Université" class="partner-logo-compact" title="Nantes Université">
+              <img src="./images/cnrs.png" alt="Nantes Université" class="partner-logo-compact" title="Nantes Université">
+           </div>
+
             <button class="expand-btn">Read more ↓</button>
           </div>
         </div>
@@ -212,18 +282,35 @@
           <div class="extended-inner">
             <h4>Abstract & Details</h4>
             <p>Funded by the Banque Publique d'Investissement (BPI) of France, the SAMFAST project focused on the rapid additive manufacturing of plastic injection mold inserts. My research centered on 1D transient heat transfer analysis to compare cooling times in steel and thermoplastic molds. I utilized an overset mesh FEM strategy to entirely eliminate the need for remeshing during the optimization phase, and performed multi-material topology optimization to significantly enhance thermal performance.</p>
-            
+
             <h4>Media Gallery</h4>
             <div class="mini-gallery">
-              <a href="/api/placeholder/800/600" data-lightbox="proj2" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj2" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj2" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="./images/samfast.png" class="glightbox" data-gallery="proj-samfast" data-title="Mesh Topology">
+                <img src="./images/samfast.png" alt="Mesh Topology">
+              </a>
+              <a href="./images/samfast/01_FULLMOLD-STEEL.mp4" class="glightbox" data-gallery="proj-samfast" data-title="Simulation Video">
+                <video src="./images/samfast/01_FULLMOLD-STEEL.mp4" autoplay loop muted playsinline></video>
+              </a>
+              <a href="./images/samfast.png" class="glightbox" data-gallery="proj-samfast" data-title="Velocity Fields">
+                <img src="./images/samfast.png" alt="Velocity Fields">
+              </a>
+              <a href="./images/samfast.png" class="glightbox" data-gallery="proj-samfast" data-title="Velocity Fields">
+                <img src="./images/samfast.png" alt="Velocity Fields">
+              </a>
+              <a href="./images/samfast/01_FULLMOLD-STEEL.mp4" class="glightbox" data-gallery="proj-samfast" data-title="Simulation Video">
+                <video src="./images/samfast/04_STEEL-2D.mp4" autoplay loop muted playsinline></video>
+              </a>
+              <a href="./images/samfast.png" class="glightbox" data-gallery="proj-samfast" data-title="Velocity Fields">
+                <img src="./images/samfast.png" alt="Velocity Fields">
+              </a>
             </div>
-
+            
             <h4>Resources</h4>
             <div class="resource-links">
-              <a href="#">View Publication / DOI →</a>
-              <a href="#">Link to Project / Code →</a>
+              <a href="https://doi.org/10.1016/j.applthermaleng.2023.121988">View Publication / DOI →</a>
+              <a href="https://compositic.fr/en/r%C3%A9alisations/sam-fast-fabrication-additive-rapide-dempreintes-doutillages-dinjection-plastique/">Link to Project Webpage →</a>
+              <a href="10.1615/IHTC17.210-10">IHTC Conference Communication →</a>
+              <a href="https://mrforum.com/product/9781644903131-297/">ESAFORM Conference Communication →</a>
             </div>
           </div>
         </div>
@@ -232,13 +319,19 @@
       <div class="timeline-item" id="proj-nrg">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
-            <img src="/api/placeholder/400/300" alt="NRG STORAGE" class="timeline-img">
+            <img src="./images/nrgstorage.png" alt="NRG STORAGE" class="timeline-img">
           </div>
           <div class="timeline-content">
-            <span class="timeline-year">2020 — 2021</span>
-            <h3 class="port-item-title">NRG-STORAGE: Phase Change Metamaterials</h3>
-            <div class="port-item-tags"><span class="port-tag">CONICET</span><span class="port-tag">Energy Plus</span><span class="port-tag">Phase Change</span></div>
+            <span class="timeline-year">2020 — 2021 <span class="fi fi-ar proj-flag" title="Argentina"></span><span class="fi fi-de proj-flag" title="Germany"></span></span>
+            <h3 class="port-item-title">NRG-STORAGE: Porous Nanocomposites for Thermal Energy Storage</h3>
+            <div class="port-item-tags"><span class="port-tag">CONICET</span><span class="port-tag">Energy Plus</span><span class="port-tag">Debugging</span><span class="port-tag">Phase Change</span><span class="port-tag">RVE</span></div>
             <p class="port-item-desc">High-fidelity thermal simulations, topology optimization, and building energy modeling of phase change and porous materials.</p>
+            
+            <div class="partner-inline-logos">
+              <img src="/api/placeholder/80/24" alt="CONICET" class="partner-logo-compact" title="CONICET">
+              <img src="/api/placeholder/80/24" alt="EU Horizon 2020" class="partner-logo-compact" title="European Union Horizon 2020">
+            </div>
+
             <button class="expand-btn">Read more ↓</button>
           </div>
         </div>
@@ -249,15 +342,25 @@
             
             <h4>Media Gallery</h4>
             <div class="mini-gallery">
-              <a href="/api/placeholder/800/600" data-lightbox="proj3" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj3" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj3" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="./images/nrgstorage.png" class="glightbox" data-gallery="proj-nrg" data-title="Mesh Topology">
+                <img src="./images/nrgstorage.png" alt="Mesh Topology">
+              </a>
+              <a href="./images/nrgstorage.png" class="glightbox" data-gallery="proj-nrg" data-title="Velocity Fields">
+                <img src="./images/nrgstorage.png" alt="Velocity Fields">
+              </a>
+              <a href="./images/nrgstorage.png" class="glightbox" data-gallery="proj-nrg" data-title="Velocity Fields">
+                <img src="./images/nrgstorage.png" alt="Velocity Fields">
+              </a>
+              <a href="./images/nrgstorage.png" class="glightbox" data-gallery="proj-nrg" data-title="Velocity Fields">
+                <img src="./images/nrgstorage.png" alt="Velocity Fields">
+              </a>
             </div>
 
             <h4>Resources</h4>
             <div class="resource-links">
               <a href="https://nrg-storage.eu/" target="_blank">Project Website →</a>
-              <a href="#">View Publication / DOI →</a>
+              <a href="https://doi.org/10.1617/s11527-024-02395-x">View Publication / DOI →</a>
+              <a href="https://doi.org/10.70567/rmc.v1i22.232">MECOM Conference Communication →</a>
             </div>
           </div>
         </div>
@@ -266,13 +369,20 @@
       <div class="timeline-item" id="proj-chimera">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
-            <img src="/api/placeholder/400/300" alt="Chimera Algorithm" class="timeline-img">
+            <img src="./images/chimera.png" alt="Chimera Algorithm" class="timeline-img">
           </div>
           <div class="timeline-content">
-            <span class="timeline-year">2015 — 2020</span>
-            <h3 class="port-item-title">Chimera Overlapping-Mesh Algorithm</h3>
-            <div class="port-item-tags"><span class="port-tag">PhD Thesis</span><span class="port-tag">FSI</span><span class="port-tag">HPC</span></div>
-            <p class="port-item-desc">Development of an overlapping-mesh technique for simulating fluid-structure interaction on complex moving geometries running on Linux-based HPC clusters.</p>
+            <span class="timeline-year">2015 — 2020 <span class="fi fi-ar proj-flag" title="Argentina"></span></span>
+            <h3 class="port-item-title">Chimera-FEM Overlapping-Mesh Algorithm</h3>
+            <div class="port-item-tags"><span class="port-tag">PhD Thesis</span><span class="port-tag">Optimization</span><span class="port-tag">HPC</span><span class="port-tag">C++/Python</span><span class="port-tag">MPI</span></div>
+            <p class="port-item-desc">Development of an overlapping-mesh technique for simulating complex moving geometries running on Linux-based HPC clusters.</p>
+            
+            <div class="partner-inline-logos">
+              <img src="./images/cimec.png" alt="CIMEC" class="partner-logo-compact" title="CIMEC">
+              <img src="./images/conicet.png" alt="CONICET" class="partner-logo-compact" title="CONICET">
+              <img src="./images/unl.png" alt="UTN" class="partner-logo-compact" title="UTN">
+            </div>
+
             <button class="expand-btn">Read more ↓</button>
           </div>
         </div>
@@ -280,14 +390,38 @@
           <div class="extended-inner">
             <h4>Abstract & Details</h4>
             <p>This doctoral research focused on particle methods, immersed-boundary techniques, and a Chimera overlapping-mesh algorithm for complex fluid-structure interaction (FSI) problems. The methodology allows for large relative displacements between solid bodies without the need for computationally expensive mesh-updating or remeshing procedures. The algorithms were parallelized and run on High-Performance Computing (HPC) environments utilizing Code Saturne and PETSc-FEM.</p>
-            
+
             <h4>Media Gallery</h4>
             <div class="mini-gallery">
-              <a href="/api/placeholder/800/600" data-lightbox="proj4" data-title="Mesh topology"><img src="/api/placeholder/200/150" alt="Gallery Image 1"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj4" data-title="Velocity fields"><img src="/api/placeholder/200/150" alt="Gallery Image 2"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj4" data-title="HPC Scaling"><img src="/api/placeholder/200/150" alt="Gallery Image 3"></a>
+              <a href="./images/chimera.png" class="glightbox" data-gallery="proj-chimera" data-title="Mesh Topology">
+                <img src="./images/chimera.png" alt="Mesh Topology">
+              </a>
+              <a href="./images/chimera/C3X_PSO.mp4" class="glightbox" data-gallery="proj-chimera" data-title="Simulation Video">
+                <video src="./images/chimera/C3X_PSO.mp4" autoplay loop muted playsinline></video>
+              </a>
+              <a href="./images/chimera/011_3Dopt_PSO_SPHERES.mp4" class="glightbox" data-gallery="proj-chimera" data-title="Simulation Video">
+                <video src="./images/chimera/011_3Dopt_PSO_SPHERES.mp4" autoplay loop muted playsinline></video>
+              </a>
+              <a href="./images/chimera/weldcase2.mp4" class="glightbox" data-gallery="proj-chimera" data-title="Simulation Video">
+                <video src="./images/chimera/weldcase2.mp4" autoplay loop muted playsinline></video>
+              </a>
+              <a href="./images/chimera/ADVEC-CHIM-SOURCE.mp4" class="glightbox" data-gallery="proj-chimera" data-title="Simulation Video">
+                <video src="./images/chimera/ADVEC-CHIM-SOURCE.mp4" autoplay loop muted playsinline></video>
+              </a>
+              <a href="./images/chimera/ADVEC-CHIM-BOUND.mp4" class="glightbox" data-gallery="proj-chimera" data-title="Simulation Video">
+                <video src="./images/chimera/ADVEC-CHIM-BOUND.mp4" autoplay loop muted playsinline></video>
+              </a>       
+              <a href="./images/chimera.png" class="glightbox" data-gallery="proj-chimera" data-title="Velocity Fields">
+                <img src="./images/chimera.png" alt="Velocity Fields">
+              </a>
+              <a href="./images/chimera.png" class="glightbox" data-gallery="proj-chimera" data-title="Velocity Fields">
+                <img src="./images/chimera.png" alt="Velocity Fields">
+              </a>
+              <a href="./images/chimera.png" class="glightbox" data-gallery="proj-chimera" data-title="Velocity Fields">
+                <img src="./images/chimera.png" alt="Velocity Fields">
+              </a>
             </div>
-
+            
             <h4>Resources</h4>
             <div class="resource-links">
               <a href="#">View Publication / DOI →</a>
@@ -300,13 +434,19 @@
       <div class="timeline-item" id="proj-vawt">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
-            <img src="/api/placeholder/400/300" alt="VAWT Optimisation" class="timeline-img">
+            <img src="./images/vawt/vawt2.png" alt="VAWT Optimisation" class="timeline-img">
           </div>
           <div class="timeline-content">
-            <span class="timeline-year">2017 — 2019</span>
+            <span class="timeline-year">2017 — 2019 <span class="fi fi-ar proj-flag" title="Argentina"></span></span>
             <h3 class="port-item-title">VAWT Deflector Optimisation</h3>
-            <div class="port-item-tags"><span class="port-tag">Wind Energy</span><span class="port-tag">Shape Optimisation</span><span class="port-tag">Neural Networks</span></div>
+            <div class="port-item-tags"><span class="port-tag">Wind Energy</span><span class="port-tag">Shape Optimisation</span><span class="port-tag">Neural Networks</span><span class="port-tag">CFD</span><span class="port-tag">Code_Saturne</span></div>
             <p class="port-item-desc">Numerical shape optimisation of deflectors for a Vertical Axis Wind Turbine using adjoint methods and neural networks.</p>
+            
+            <div class="partner-inline-logos">
+              <img src="/api/placeholder/80/24" alt="CIMEC" class="partner-logo-compact" title="CIMEC">
+              <img src="/api/placeholder/80/24" alt="UTN" class="partner-logo-compact" title="UTN">
+            </div>
+
             <button class="expand-btn">Read more ↓</button>
           </div>
         </div>
@@ -317,9 +457,13 @@
             
             <h4>Media Gallery</h4>
             <div class="mini-gallery">
-              <a href="/api/placeholder/800/600" data-lightbox="proj5" data-title="Savonius rotor"><img src="/api/placeholder/200/150" alt="Gallery Image 1"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj5" data-title="Streamlines"><img src="/api/placeholder/200/150" alt="Gallery Image 2"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj5" data-title="Optimization"><img src="/api/placeholder/200/150" alt="Gallery Image 3"></a>
+              <a href="./images/vawt/avawt1.jpg" class="glightbox" data-gallery="proj-vawt" data-title="Savonius rotor"><img src="./images/vawt/avawt1.jpg" alt="Gallery Image 1"></a>
+              <a href="./images/vawt/avawt2.jpg" class="glightbox" data-gallery="proj-vawt" data-title="Savonius rotor"><img src="./images/vawt/avawt2.jpg" alt="Gallery Image 2"></a>
+              <a href="./images/vawt/avawt3.jpg" class="glightbox" data-gallery="proj-vawt" data-title="Savonius rotor"><img src="./images/vawt/avawt3.jpg" alt="Gallery Image 3"></a>
+              <a href="./images/vawt/avawt4.jpg" class="glightbox" data-gallery="proj-vawt" data-title="Savonius rotor"><img src="./images/vawt/avawt4.jpg" alt="Gallery Image 4"></a>
+              <a href="./images/vawt/VAWT_HC300.mp4" class="glightbox" data-gallery="proj-vawt" data-title="Simulation Video">
+                <video src="./images/VAWT_HC300.mp4" autoplay loop muted playsinline></video>
+              </a>
             </div>
 
             <h4>Resources</h4>
@@ -330,82 +474,21 @@
         </div>
       </div>
 
-      <div class="timeline-item" id="proj-teaching">
+            <div class="timeline-item" id="proj-wind">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
-            <img src="/api/placeholder/400/300" alt="SolidWorks Teaching" class="timeline-img">
+            <img src="./images/windturbine/wt5_small.png" alt="Wind Turbine" class="timeline-img">
           </div>
           <div class="timeline-content">
-            <span class="timeline-year">2015 — 2022</span>
-            <h3 class="port-item-title">Engineering Mechanics & Simulation Instruction</h3>
-            <div class="port-item-tags"><span class="port-tag">Assistant Professor</span><span class="port-tag">UTN</span><span class="port-tag">SolidWorks</span></div>
-            <p class="port-item-desc">Led practical lessons solving fluid mechanics problems in engineering, and delivered SolidWorks Motion simulation courses for industry professionals.</p>
-            <button class="expand-btn">Read more ↓</button>
-          </div>
-        </div>
-        <div class="timeline-extended">
-          <div class="extended-inner">
-            <h4>Abstract & Details</h4>
-            <p>During my tenure as an Assistant Professor at the Universidad Tecnológica Nacional (UTN), I led practical lessons focusing on complex fluid mechanics problems. Drawing on my extensive background in CAD/CAE software, I also developed and taught comprehensive courses on SolidWorks Motion. The curriculum bridged the gap between academic theory (kinematics and dynamics) and practical, industry-standard simulation software.</p>
-            
-            <h4>Media Gallery</h4>
-            <div class="mini-gallery">
-              <a href="/api/placeholder/800/600" data-lightbox="proj6" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj6" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj6" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-            </div>
-
-            <h4>Resources</h4>
-            <div class="resource-links">
-              <a href="#">Course Syllabus (PDF) →</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item" id="proj-olive">
-        <div class="timeline-summary">
-          <div class="timeline-img-wrap">
-            <img src="/api/placeholder/400/300" alt="Olive Harvester" class="timeline-img">
-          </div>
-          <div class="timeline-content">
-            <span class="timeline-year">2014 — 2015</span>
-            <h3 class="port-item-title">Pneumatic Pulse-Wind Harvester</h3>
-            <div class="port-item-tags"><span class="port-tag">Internship</span><span class="port-tag">Mechanical Design</span><span class="port-tag">Prototyping</span></div>
-            <p class="port-item-desc">Full design, FEM structural analysis, and construction of an air-pulse harvester prototype that detaches olives without damaging the trees.</p>
-            <button class="expand-btn">Read more ↓</button>
-          </div>
-        </div>
-        <div class="timeline-extended">
-          <div class="extended-inner">
-            <h4>Abstract & Details</h4>
-            <p>During my Research Engineering Internship at CIMEC - CONICET, I adapted a previously developed olive harvester to a new application for blueberry harvesting. The work combined mechanical design, numerical analysis, and prototype construction. I created detailed 3D CAD models of the machine structure, performed kinematic analyses in SolidWorks Motion, and conducted FEM simulations to evaluate stress and deformation in critical components like the scissor lift mechanism.</p>
-            
-            <h4>Media Gallery</h4>
-            <div class="mini-gallery">
-              <a href="/api/placeholder/800/600" data-lightbox="proj7" data-title="CAD Model"><img src="/api/placeholder/200/150" alt="Gallery Image 1"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj7" data-title="Manufactured Prototype"><img src="/api/placeholder/200/150" alt="Gallery Image 2"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj7" data-title="Field Testing"><img src="/api/placeholder/200/150" alt="Gallery Image 3"></a>
-            </div>
-
-            <h4>Resources</h4>
-            <div class="resource-links">
-              <a href="#">View Document (PDF) →</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item" id="proj-wind">
-        <div class="timeline-summary">
-          <div class="timeline-img-wrap">
-            <img src="/api/placeholder/400/300" alt="Wind Turbine" class="timeline-img">
-          </div>
-          <div class="timeline-content">
-            <span class="timeline-year">2014</span>
+            <span class="timeline-year">2014 - 2015 <span class="fi fi-ar proj-flag" title="Argentina"></span></span>
             <h3 class="port-item-title">Wind Turbine CFD</h3>
-            <div class="port-item-tags"><span class="port-tag">HAWT</span><span class="port-tag">Degree Thesis</span><span class="port-tag">CFD</span></div>
+            <div class="port-item-tags"><span class="port-tag">HAWT</span><span class="port-tag">Degree Thesis</span><span class="port-tag">CFD</span><span class="port-tag">IFEM</span><span class="port-tag">ANSYS</span><span class="port-tag">Qblade</span></div>
             <p class="port-item-desc">Aerodynamic optimisation of an urban medium-scale Horizontal Axis Wind Turbine — culminating in my engineering degree thesis.</p>
+            
+            <div class="partner-inline-logos">
+              <img src="/api/placeholder/80/24" alt="UTN" class="partner-logo-compact" title="UTN">
+            </div>
+
             <button class="expand-btn">Read more ↓</button>
           </div>
         </div>
@@ -416,9 +499,9 @@
             
             <h4>Media Gallery</h4>
             <div class="mini-gallery">
-              <a href="/api/placeholder/800/600" data-lightbox="proj8" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj8" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj8" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" class="glightbox" data-gallery="proj-wind" data-title="Caption 1"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" class="glightbox" data-gallery="proj-wind" data-title="Caption 2"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
+              <a href="/api/placeholder/800/600" class="glightbox" data-gallery="proj-wind" data-title="Caption 3"><img src="/api/placeholder/200/150" alt="Gallery Image"></a>
             </div>
 
             <h4>Resources</h4>
@@ -429,16 +512,61 @@
         </div>
       </div>
 
+
+      <div class="timeline-item" id="proj-olive">
+        <div class="timeline-summary">
+          <div class="timeline-img-wrap">
+            <img src="./images/harvester/h4.png" alt="Olive Harvester" class="timeline-img">
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">2014 — 2015 <span class="fi fi-ar proj-flag" title="Argentina"></span></span>
+            <h3 class="port-item-title">Pneumatic Pulse-Wind Harvester</h3>
+            <div class="port-item-tags"><span class="port-tag">Internship</span><span class="port-tag">Mechanical Design</span><span class="port-tag">Prototyping</span><span class="port-tag">SolidWorks Motion</span><span class="port-tag">FEM</span></div>
+            <p class="port-item-desc">Full design, FEM structural analysis, and construction of an air-pulse harvester prototype that detaches olives without damaging the trees.</p>
+            
+            <div class="partner-inline-logos">
+              <img src="/api/placeholder/80/24" alt="CIMEC" class="partner-logo-compact" title="CIMEC">
+              <img src="/api/placeholder/80/24" alt="CONICET" class="partner-logo-compact" title="CONICET">
+            </div>
+
+            <button class="expand-btn">Read more ↓</button>
+          </div>
+        </div>
+        <div class="timeline-extended">
+          <div class="extended-inner">
+            <h4>Abstract & Details</h4>
+            <p>During my Research Engineering Internship at CIMEC - CONICET, I adapted a previously developed olive harvester to a new application for blueberry harvesting. The work combined mechanical design, numerical analysis, and prototype construction. I created detailed 3D CAD models of the machine structure, performed kinematic analyses in SolidWorks Motion, and conducted FEM simulations to evaluate stress and deformation in critical components like the scissor lift mechanism.</p>
+            
+            <h4>Media Gallery</h4>
+            <div class="mini-gallery">
+              <a href="/api/placeholder/800/600" class="glightbox" data-gallery="proj-olive" data-title="CAD Model"><img src="/api/placeholder/200/150" alt="Gallery Image 1"></a>
+              <a href="/api/placeholder/800/600" class="glightbox" data-gallery="proj-olive" data-title="Manufactured Prototype"><img src="/api/placeholder/200/150" alt="Gallery Image 2"></a>
+              <a href="/api/placeholder/800/600" class="glightbox" data-gallery="proj-olive" data-title="Field Testing"><img src="/api/placeholder/200/150" alt="Gallery Image 3"></a>
+            </div>
+
+            <h4>Resources</h4>
+            <div class="resource-links">
+              <a href="#">View Document (PDF) →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="timeline-item" id="proj-solar">
         <div class="timeline-summary">
           <div class="timeline-img-wrap">
-            <img src="/api/placeholder/400/300" alt="Solar Car" class="timeline-img">
+            <img src="./images/solarcar/SC2_small.jpg" alt="Solar Car" class="timeline-img">
           </div>
           <div class="timeline-content">
-            <span class="timeline-year">2013</span>
-            <h3 class="port-item-title">Solar Car Aerodynamics</h3>
+            <span class="timeline-year">2013 - 2014 <span class="fi fi-ar proj-flag" title="Argentina"></span></span>
+            <h3 class="port-item-title">Aerodynamic Design of an Electric Solar Car</h3>
             <div class="port-item-tags"><span class="port-tag">CFD</span><span class="port-tag">Aerodynamics</span><span class="port-tag">ANSYS</span></div>
             <p class="port-item-desc">CFD-driven aerodynamic design of a solar vehicle body to compete in the Atacama Solar Challenge in Chile.</p>
+            
+            <div class="partner-inline-logos">
+              <img src="/api/placeholder/80/24" alt="UTN Santa Fe" class="partner-logo-compact" title="UTN Santa Fe">
+            </div>
+
             <button class="expand-btn">Read more ↓</button>
           </div>
         </div>
@@ -449,9 +577,12 @@
             
             <h4>Media Gallery</h4>
             <div class="mini-gallery">
-              <a href="/api/placeholder/800/600" data-lightbox="proj9" data-title="Solar Car CFD 1"><img src="/api/placeholder/200/150" alt="Gallery Image 1"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj9" data-title="Solar Car CFD 2"><img src="/api/placeholder/200/150" alt="Gallery Image 2"></a>
-              <a href="/api/placeholder/800/600" data-lightbox="proj9" data-title="Solar Car CFD 3"><img src="/api/placeholder/200/150" alt="Gallery Image 3"></a>
+              <a href="./images/solarcar/SC1.jpg" class="glightbox" data-gallery="proj-solar" data-title="Solar Car CFD 1"><img src="./images/solarcar/SC1.jpg" alt="Gallery Image 1"></a>
+              <a href="./images/solarcar/SC2.jpg" class="glightbox" data-gallery="proj-solar" data-title="Solar Car CFD 2"><img src="./images/solarcar/SC2.jpg" alt="Gallery Image 2"></a>
+              <a href="./images/solarcar/SC3.jpg" class="glightbox" data-gallery="proj-solar" data-title="Solar Car CFD 3"><img src="./images/solarcar/SC3.jpg" alt="Gallery Image 3"></a>
+              <a href="./images/solarcar/SC4.jpg" class="glightbox" data-gallery="proj-solar" data-title="Solar Car CFD 4"><img src="./images/solarcar/SC4.jpg" alt="Gallery Image 4"></a>
+              <a href="./images/solarcar/SC5.jpg" class="glightbox" data-gallery="proj-solar" data-title="Solar Car CFD 5"><img src="./images/solarcar/SC5.jpg" alt="Gallery Image 5"></a>
+              <a href="./images/solarcar/SC6.png" class="glightbox" data-gallery="proj-solar" data-title="Solar Car CFD 6"><img src="./images/solarcar/SC6.png" alt="Gallery Image 6"></a>
             </div>
 
             <h4>Resources</h4>
@@ -472,7 +603,7 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   
   <script>
     // Fade-in on scroll
@@ -527,6 +658,13 @@
           }, 300); 
         }
       }
+    });
+
+    // --- Initialize GLightbox ---
+    const lightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true
     });
   </script>
 </body>
